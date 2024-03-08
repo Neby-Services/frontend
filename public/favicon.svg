@@ -1,0 +1,16 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="1000" height="684.24927" viewBox="0 0 1000 684.24927">
+	<path
+		d="M615.94527 255.22832 440.38853 79.671588 56.338641 463.72148m327.716079-34.7006 175.55673 175.55677L943.6613 220.52761"
+		style="fill:none;stroke:currentColor;stroke-width:159.35;stroke-linecap:butt;stroke-linejoin:round;stroke-miterlimit:1.5;stroke-dasharray:none;stroke-opacity:1" />
+	<style>
+		svg {
+			color: #000;
+		}
+
+		@media (prefers-color-scheme: dark) {
+			svg {
+				color: #fff;
+			}
+		}
+	</style>
+</svg>
