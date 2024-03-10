@@ -1,0 +1,62 @@
+---
+import Layout from "@/layouts/Layout.astro";
+
+import {Button} from "@/components/ui/button";
+---
+
+<Layout title="Neby - Register">
+	<main class="h-svh">
+		<div class="h-svh py-8 grid place-content-center">
+			<div class="flex flex-col justify-between w-fit max-h-svh px-32 py-20 bg-white shadow-xl overflow-y-auto">
+				<h1 class="text-6xl font-bold text-center mb-12">Crear Cuenta</h1>
+				<form class="flex flex-col flex-1">
+					<label class="flex flex-col text-xl font-semibold gap-2 mb-6"
+						>Email
+						<input class="border-2 border-black rounded-lg text-base p-1.5" id="register-email" type="email" />
+					</label>
+					<label class="flex flex-col text-xl font-semibold gap-2 mb-6"
+						>Nombre de usuario
+						<input class="border-2 border-black rounded-lg text-base p-1.5" id="register-username" type="text" />
+					</label>
+					<label class="flex flex-col text-xl font-semibold gap-2 mb-6"
+						>Contraseña
+						<input class="border-2 border-black rounded-lg text-base p-1.5" id="register-password" type="password" />
+					</label>
+					<label class="flex flex-col text-xl font-semibold gap-2 mb-6"
+						>Confirmar contraseña
+						<input class="border-2 border-black rounded-lg text-base p-1.5" id="register-confirm-password" type="password" />
+					</label>
+					<label class="flex flex-col text-xl font-semibold gap-2 mb-6"
+						>Tipo de usuario
+						<div class="flex flex-row justify-center items-center w-full rounded-lg overflow-hidden border-2 border-foreground bg-foreground">
+							<Button className="rounded-none flex-1 font-semibold text-base" variant="secondary">Vecino</Button>
+							<Button className="rounded-none flex-1 font-semibold text-base" variant="tertiary">Administrador</Button>
+						</div>
+					</label>
+					<label class="flex flex-col text-xl font-semibold gap-2 mb-6"
+						>Código de comunidad
+						<input class="border-2 border-black rounded-lg text-base p-1.5" id="register-community-name" type="text" />
+					</label>
+					<Button className="w-fit place-self-center mt-10 px-7 py-7 font-semibold text-lg shadow-lg flex flex-row gap-4">
+						<svg class="size-6" viewBox="0 0 50 50">
+							<path d="M14.402039 25.000061h21.195839M25.000001 14.402083v21.195792M.66146512 6.0699989A5.4085667 5.408566 0 0 1 6.069986.66146231h37.860043a5.4085667 5.408566 0 0 1 5.408516 5.40853659V43.930082a5.4085667 5.408566 0 0 1-5.408516 5.408536H6.069986a5.4085667 5.408566 0 0 1-5.40852088-5.408536Z" style="fill:none;stroke:currentColor;stroke-width:4.5;stroke-linecap:round;stroke-linejoin:round;stroke-miterlimit:4;stroke-dasharray:none;stroke-opacity:1" transform="matrix(.92445973 0 0 .92445974 1.8885021 1.8884694)"></path>
+						</svg>
+						Crear Cuenta
+					</Button>
+				</form>
+			</div>
+		</div>
+	</main>
+</Layout>
+
+<style>
+	main {
+		background-image: url("/background.jpg");
+	}
+
+	main > div {
+		scrollbar-color: #eaeaea white;
+	}
+</style>
+
+<script></script>
