@@ -37,7 +37,7 @@ import {Button} from "@/components/ui/button";
 						>Código de comunidad
 						<input class="border-2 border-black rounded-lg text-base p-1.5" id="register-community-name" type="text" />
 					</label>
-					<Button className="w-fit place-self-center mt-10 px-7 py-7 font-semibold text-lg shadow-lg flex flex-row gap-4">
+					<Button className="w-fit place-self-center mt-10 px-7 py-7 font-semibold text-lg shadow-lg flex flex-row gap-4" id="register-submit">
 						<svg class="size-6" viewBox="0 0 50 50">
 							<path d="M14.402039 25.000061h21.195839M25.000001 14.402083v21.195792M.66146512 6.0699989A5.4085667 5.408566 0 0 1 6.069986.66146231h37.860043a5.4085667 5.408566 0 0 1 5.408516 5.40853659V43.930082a5.4085667 5.408566 0 0 1-5.408516 5.408536H6.069986a5.4085667 5.408566 0 0 1-5.40852088-5.408536Z" style="fill:none;stroke:currentColor;stroke-width:4.5;stroke-linecap:round;stroke-linejoin:round;stroke-miterlimit:4;stroke-dasharray:none;stroke-opacity:1" transform="matrix(.92445973 0 0 .92445974 1.8885021 1.8884694)"></path>
 						</svg>
@@ -59,4 +59,43 @@ import {Button} from "@/components/ui/button";
 	}
 </style>
 
-<script></script>
+<script>
+	const form = document.querySelector("form");
+
+	const emailInput = document.querySelector<HTMLInputElement>("#register-email");
+	const usernameInput = document.querySelector<HTMLInputElement>("#register-username");
+	const passwordInput = document.querySelector<HTMLInputElement>("#register-password");
+	const confirmPasswordInput = document.querySelector<HTMLInputElement>("#register-confirm-password");
+	const communityNameInupt = document.querySelector<HTMLInputElement>("#register-community-name");
+
+	const submitButton = document.querySelector("#register-submit");
+
+	form?.addEventListener("submit", e => e.preventDefault());
+
+	submitButton?.addEventListener("click", async () => {
+		console.log(`${emailInput?.value} ${usernameInput?.value} ${passwordInput?.value} ${confirmPasswordInput?.value}`);
+
+		if (passwordInput?.value != confirmPasswordInput?.value) return;
+
+		const user = {
+			password: passwordInput?.value,
+			username: usernameInput?.value,
+			email: emailInput?.value,
+			type: "admin",
+			community_name: communityNameInupt?.value,
+			community_code: communityNameInupt?.value
+		};
+
+		const res = await fetch("/api/auth/register", {
+			method: "POST",
+			headers: {
+				"Content-Type": "application/json"
+			},
+			body: JSON.stringify(user)
+		});
+
+		const data = await res.json();
+
+		console.log(data);
+	});
+</script>
