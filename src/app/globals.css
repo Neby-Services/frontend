@@ -1,0 +1,27 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+:root {
+	--foreground: #000000;
+	--background: #ffffff;
+}
+
+@media (prefers-color-scheme: dark) {
+	:root {
+		--foreground: #000000;
+		--background: #ffffff;
+	}
+}
+
+body {
+	color: var(--foreground);
+	background: var(--background);
+	font-family: "Montserrat Variable", sans-serif;
+}
+
+@layer utilities {
+	.text-balance {
+		text-wrap: balance;
+	}
+}
