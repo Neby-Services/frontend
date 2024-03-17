@@ -5,7 +5,6 @@ import {Button} from "@/components/ui/button";
 import {ScrollArea} from "@/components/ui/scroll-area";
 import UserTypeSelect from "@/components/ui/user-type-select";
 import styles from "@/ui/register.module.css";
-// import {registerUser, RegisterData} from "@/lib/actions";
 
 export default function Register() {
 	const [email, setEmail] = useState("");
@@ -25,8 +24,8 @@ export default function Register() {
 			username: string;
 			password: string;
 			type: string;
-			communityCode?: string;
-			communityName?: string;
+			community_code?: string;
+			community_name?: string;
 		}
 
 		let registerData: RegisterData = {
@@ -36,8 +35,8 @@ export default function Register() {
 			type: userType
 		};
 
-		if (userType == "neighbor") registerData["communityCode"] = communityCode;
-		else if (userType == "admin") registerData["communityName"] = communityName;
+		if (userType == "neighbor") registerData["community_code"] = communityCode;
+		else if (userType == "admin") registerData["community_name"] = communityName;
 
 		const res = await fetch("/api/auth/register", {
 			method: "POST",

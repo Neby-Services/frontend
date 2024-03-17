@@ -4,7 +4,7 @@ import "./globals.css";
 
 export const metadata: Metadata = {
 	title: "Neby",
-	description: "Neby"
+	description: "Neby - La solución para una comunidad organizada"
 };
 
 export default function RootLayout({
