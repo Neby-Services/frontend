@@ -49,49 +49,48 @@ export default function Register() {
 		const data = await res.json();
 
 		console.log(data);
-		// registerUser(registerData);
 	};
 
 	return (
 		<main className={`${styles.background} h-svh`}>
 			<div className="h-svh py-8 grid place-content-center">
-				<ScrollArea className="flex flex-col justify-between w-fit max-h-svh bg-background shadow-xl rounded-xl">
-					<div className="px-16 py-10">
-						<h1 className="text-6xl font-bold text-center mb-12">Crear Cuenta</h1>
+				<ScrollArea className="max-w-[95vw] sm:w-[500px] max-h-svh bg-background shadow-xl rounded-xl">
+					<div className="px-10 py-8 sm:px-16 sm:py-10">
+						<h1 className="text-3xl sm:text-4xl font-bold text-center mb-12">Crear Cuenta</h1>
 						<form onSubmit={e => e.preventDefault()} className="flex flex-col flex-1">
-							<label className="flex flex-col text-xl font-semibold gap-2 mb-6">
+							<label className="flex flex-col text-sm sm:text-lg font-semibold gap-2 mb-6">
 								Email
 								<input onChange={e => setEmail(e.target.value)} value={email} className="border-2 border-black rounded-lg text-base p-1.5" type="email" />
 							</label>
-							<label className="flex flex-col text-xl font-semibold gap-2 mb-6">
+							<label className="flex flex-col text-sm sm:text-lg font-semibold gap-2 mb-6">
 								Nombre de usuario
 								<input onChange={e => setUsername(e.target.value)} value={username} className="border-2 border-black rounded-lg text-base p-1.5" type="text" />
 							</label>
-							<label className="flex flex-col text-xl font-semibold gap-2 mb-6">
+							<label className="flex flex-col text-sm sm:text-lg font-semibold gap-2 mb-6">
 								Contraseña
 								<input onChange={e => setPassword(e.target.value)} value={password} className="border-2 border-black rounded-lg text-base p-1.5" type="password" />
 							</label>
-							<label className="flex flex-col text-xl font-semibold gap-2 mb-6">
+							<label className="flex flex-col text-sm sm:text-lg font-semibold gap-2 mb-6">
 								Confirmar contraseña
 								<input onChange={e => setConfirmPassword(e.target.value)} value={confirmPassword} className="border-2 border-black rounded-lg text-base p-1.5" type="password" />
 							</label>
-							<div className="flex flex-col text-xl font-semibold gap-2 mb-6">
+							<div className="flex flex-col text-sm sm:text-lg font-semibold gap-2 mb-6">
 								<label>Tipo de usuario</label>
 								<UserTypeSelect value={userType} setValue={setUserType} />
 							</div>
 							{userType === "neighbor" && (
-								<label className="flex flex-col text-xl font-semibold gap-2 mb-6">
+								<label className="flex flex-col text-sm sm:text-lg font-semibold gap-2 mb-6">
 									<span>Código de comunidad</span>
 									<input onChange={e => setCommunityCode(e.target.value)} value={communityCode} className="border-2 border-black rounded-lg text-base p-1.5" type="text" />
 								</label>
 							)}
 							{userType === "admin" && (
-								<label className="flex flex-col text-xl font-semibold gap-2 mb-6">
+								<label className="flex flex-col text-sm sm:text-lg font-semibold gap-2 mb-6">
 									<span>Nombre de la comunidad</span>
 									<input onChange={e => setCommunityName(e.target.value)} value={communityName} className="border-2 border-black rounded-lg text-base p-1.5" type="text" />
 								</label>
 							)}
-							<Button onClick={handleSubmit} className="w-fit place-self-center mt-10 px-7 py-7 font-semibold text-lg shadow-lg flex flex-row gap-4">
+							<Button onClick={handleSubmit} className="w-fit place-self-center mt-10 px-7 py-7 font-semibold text-base sm:text-lg shadow-lg flex flex-row gap-4">
 								<svg className="size-6" fill="none" stroke="currentColor" strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" viewBox="0 0 24 24">
 									<path stroke="none" d="M0 0h24v24H0z"></path>
 									<path d="M8 7a4 4 0 1 0 8 0 4 4 0 0 0-8 0M16 19h6M19 16v6M6 21v-2a4 4 0 0 1 4-4h4"></path>
