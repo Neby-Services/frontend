@@ -3,8 +3,10 @@
 import {useState, FormEvent} from "react";
 import {Button} from "@/components/ui/button";
 import {ScrollArea} from "@/components/ui/scroll-area";
+import Link from "next/link";
 import UserTypeSelect from "@/components/ui/user-type-select";
 import styles from "@/ui/register.module.css";
+import {useRouter} from "next/navigation";
 
 export default function Register() {
 	const [email, setEmail] = useState("");
@@ -15,8 +17,12 @@ export default function Register() {
 	const [communityCode, setCommunityCode] = useState("");
 	const [communityName, setCommunityName] = useState("");
 
+	const router = useRouter();
+
 	const handleSubmit = async (e: FormEvent) => {
 		e.preventDefault();
+
+		if (email == "" || username == "" || password == "" || confirmPassword == "") return;
 		if (password != confirmPassword) return;
 
 		interface RegisterData {
@@ -48,14 +54,27 @@ export default function Register() {
 
 		const data = await res.json();
 
+		if (!res.ok) {
+			router.push("/dashboard");
+		}
+
 		console.log(data);
 	};
 
 	return (
 		<main className={`${styles.background} h-svh`}>
 			<div className="h-svh py-8 grid place-content-center">
-				<ScrollArea className="max-w-[95vw] sm:w-[500px] max-h-svh bg-background shadow-xl rounded-xl">
+				<ScrollArea className="w-[95vw] max-w-[600px] max-h-svh bg-background shadow-xl rounded-xl">
 					<div className="px-10 py-8 sm:px-16 sm:py-10">
+						<Link className="flex flex-row gap-1 mb-3 -translate-x-4 font-medium text-sm transition-all hover:underline" href="/">
+							<svg className="size-5" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1" strokeLinecap="round" strokeLinejoin="round">
+								<path stroke="none" d="M0 0h24v24H0z" fill="none" />
+								<path d="M5 12l14 0" />
+								<path d="M5 12l6 6" />
+								<path d="M5 12l6 -6" />
+							</svg>
+							Volver
+						</Link>
 						<h1 className="text-3xl sm:text-4xl font-bold text-center mb-12">Crear Cuenta</h1>
 						<form onSubmit={e => e.preventDefault()} className="flex flex-col flex-1">
 							<label className="flex flex-col text-sm sm:text-lg font-semibold gap-2 mb-6">
