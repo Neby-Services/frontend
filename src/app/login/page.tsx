@@ -16,6 +16,8 @@ export default function Login() {
 	const handleSubmit = async (e: FormEvent) => {
 		e.preventDefault();
 
+		if (email == "" || password == "") return;
+
 		interface LoginData {
 			email: string;
 			password: string;
@@ -61,16 +63,18 @@ export default function Login() {
 						<form onSubmit={e => e.preventDefault()} className="flex flex-col flex-1">
 							<label className="flex flex-col text-sm sm:text-lg font-semibold gap-2 mb-6">
 								Email
-								<input onChange={e => setEmail(e.target.value)} value={email} className="border-2 border-black rounded-lg text-base p-1.5" type="email" />
+								<input onChange={e => setEmail(e.target.value)} value={email} className="border-2 rounded-lg text-base p-1.5" type="email" />
 							</label>
 							<label className="flex flex-col text-sm sm:text-lg font-semibold gap-2 mb-6">
 								Contraseña
-								<input onChange={e => setPassword(e.target.value)} value={password} className="border-2 border-black rounded-lg text-base p-1.5" type="password" />
+								<input onChange={e => setPassword(e.target.value)} value={password} className="border-2 rounded-lg text-base p-1.5" type="password" />
 							</label>
-							<Button onClick={handleSubmit} className="w-fit place-self-center mt-10 px-7 py-7 font-semibold text-base sm:text-lg shadow-lg flex flex-row gap-4">
+							<Button variant="secondary" onClick={handleSubmit} className="w-fit place-self-center mt-10 px-7 py-7 font-semibold text-base sm:text-lg shadow-lg flex flex-row gap-4">
 								<svg className="size-6" fill="none" stroke="currentColor" strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" viewBox="0 0 24 24">
-									<path stroke="none" d="M0 0h24v24H0z"></path>
-									<path d="M8 7a4 4 0 1 0 8 0 4 4 0 0 0-8 0M16 19h6M19 16v6M6 21v-2a4 4 0 0 1 4-4h4"></path>
+									<path stroke="none" d="M0 0h24v24H0z" fill="none" />
+									<path d="M9 8v-2a2 2 0 0 1 2 -2h7a2 2 0 0 1 2 2v12a2 2 0 0 1 -2 2h-7a2 2 0 0 1 -2 -2v-2" />
+									<path d="M3 12h13l-3 -3" />
+									<path d="M13 15l3 -3" />
 								</svg>
 								Iniciar Sesión
 							</Button>
