@@ -60,19 +60,19 @@ export default function Register() {
 						<form onSubmit={e => e.preventDefault()} className="flex flex-col flex-1">
 							<label className="flex flex-col text-sm sm:text-lg font-semibold gap-2 mb-6">
 								Email
-								<input onChange={e => setEmail(e.target.value)} value={email} className="border-2 border-black rounded-lg text-base p-1.5" type="email" />
+								<input onChange={e => setEmail(e.target.value)} value={email} className="border-2 rounded-lg text-base p-1.5" type="email" />
 							</label>
 							<label className="flex flex-col text-sm sm:text-lg font-semibold gap-2 mb-6">
 								Nombre de usuario
-								<input onChange={e => setUsername(e.target.value)} value={username} className="border-2 border-black rounded-lg text-base p-1.5" type="text" />
+								<input onChange={e => setUsername(e.target.value)} value={username} className="border-2 rounded-lg text-base p-1.5" type="text" />
 							</label>
 							<label className="flex flex-col text-sm sm:text-lg font-semibold gap-2 mb-6">
 								Contraseña
-								<input onChange={e => setPassword(e.target.value)} value={password} className="border-2 border-black rounded-lg text-base p-1.5" type="password" />
+								<input onChange={e => setPassword(e.target.value)} value={password} className="border-2 rounded-lg text-base p-1.5" type="password" />
 							</label>
 							<label className="flex flex-col text-sm sm:text-lg font-semibold gap-2 mb-6">
 								Confirmar contraseña
-								<input onChange={e => setConfirmPassword(e.target.value)} value={confirmPassword} className="border-2 border-black rounded-lg text-base p-1.5" type="password" />
+								<input onChange={e => setConfirmPassword(e.target.value)} value={confirmPassword} className="border-2 rounded-lg text-base p-1.5" type="password" />
 							</label>
 							<div className="flex flex-col text-sm sm:text-lg font-semibold gap-2 mb-6">
 								<label>Tipo de usuario</label>
@@ -81,16 +81,16 @@ export default function Register() {
 							{userType === "neighbor" && (
 								<label className="flex flex-col text-sm sm:text-lg font-semibold gap-2 mb-6">
 									<span>Código de comunidad</span>
-									<input onChange={e => setCommunityCode(e.target.value)} value={communityCode} className="border-2 border-black rounded-lg text-base p-1.5" type="text" />
+									<input onChange={e => setCommunityCode(e.target.value)} value={communityCode} className="border-2 rounded-lg text-base p-1.5" type="text" />
 								</label>
 							)}
 							{userType === "admin" && (
 								<label className="flex flex-col text-sm sm:text-lg font-semibold gap-2 mb-6">
 									<span>Nombre de la comunidad</span>
-									<input onChange={e => setCommunityName(e.target.value)} value={communityName} className="border-2 border-black rounded-lg text-base p-1.5" type="text" />
+									<input onChange={e => setCommunityName(e.target.value)} value={communityName} className="border-2 rounded-lg text-base p-1.5" type="text" />
 								</label>
 							)}
-							<Button onClick={handleSubmit} className="w-fit place-self-center mt-10 px-7 py-7 font-semibold text-base sm:text-lg shadow-lg flex flex-row gap-4">
+							<Button variant="secondary" onClick={handleSubmit} className="w-fit place-self-center mt-10 px-7 py-7 font-semibold text-base sm:text-lg shadow-lg flex flex-row gap-4">
 								<svg className="size-6" fill="none" stroke="currentColor" strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" viewBox="0 0 24 24">
 									<path stroke="none" d="M0 0h24v24H0z"></path>
 									<path d="M8 7a4 4 0 1 0 8 0 4 4 0 0 0-8 0M16 19h6M19 16v6M6 21v-2a4 4 0 0 1 4-4h4"></path>
