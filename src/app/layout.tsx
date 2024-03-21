@@ -17,7 +17,16 @@ export default function RootLayout({
 		<html lang="es">
 			<body>
 				{children}
-				<Toaster expand={true} />
+				<Toaster
+					expand={true}
+					toastOptions={{
+						classNames: {
+							toast: "font-sans",
+							title: "font-medium",
+							description: "font-normal"
+						}
+					}}
+				/>
 			</body>
 		</html>
 	);

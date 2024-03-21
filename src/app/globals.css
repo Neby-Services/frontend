@@ -32,6 +32,8 @@
 		--input: 190 68% 12%;
 		--ring: 222.2 84% 4.9%;
 
+		--font-sans: "Montserrat Variable", "sans-serif";
+
 		--radius: 0.5rem;
 	}
 
@@ -72,6 +74,5 @@
 	}
 	body {
 		@apply bg-background text-foreground;
-		font-family: "Montserrat Variable", sans-serif;
 	}
 }

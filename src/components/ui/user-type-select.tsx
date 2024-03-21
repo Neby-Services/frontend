@@ -1,4 +1,4 @@
-import {Button} from "@/components/ui/button";
+import {Tabs, TabsList, TabsTrigger} from "@/components/ui/tabs";
 import {cn} from "@/lib/utils";
 
 interface UserTypeSelectProps {
@@ -8,21 +8,16 @@ interface UserTypeSelectProps {
 }
 
 export default function UserTypeSelect({className, value, setValue}: UserTypeSelectProps) {
-	const handleClickNeighbor = () => {
-		setValue("neighbor");
-	};
-	const handleClickAdmin = () => {
-		setValue("admin");
-	};
-
 	return (
-		<div className={cn("flex flex-row justify-center items-center w-full rounded-lg overflow-hidden border-2 border-foreground bg-foreground", className)}>
-			<Button className="flex-1 w-1/2 rounded-none font-semibold max-sm:text-xs text-base" onClick={handleClickNeighbor} variant={value == "neighbor" ? "default" : "tertiary"}>
-				Vecino
-			</Button>
-			<Button className="flex-1 w-1/2 rounded-none font-semibold max-sm:text-xs text-base" onClick={handleClickAdmin} variant={value == "admin" ? "default" : "tertiary"}>
-				Administrador
-			</Button>
-		</div>
+		<Tabs defaultValue="neighbor" onValueChange={type => setValue(type)}>
+			<TabsList className={cn("w-full h-fit p-0 rounded-lg overflow-hidden border-2 border-foreground bg-foreground", className)}>
+				<TabsTrigger className="flex-1 w-1/2 px-8 py-2 rounded-none font-semibold max-sm:text-xs text-base" value="neighbor">
+					Vecino
+				</TabsTrigger>
+				<TabsTrigger className="flex-1 w-1/2 px-8 py-2 rounded-none font-semibold max-sm:text-xs text-base" value="admin">
+					Administrador
+				</TabsTrigger>
+			</TabsList>
+		</Tabs>
 	);
 }
