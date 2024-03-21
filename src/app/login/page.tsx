@@ -6,6 +6,8 @@ import {ScrollArea} from "@/components/ui/scroll-area";
 import Link from "next/link";
 import styles from "@/ui/login.module.css";
 import {useRouter} from "next/navigation";
+import {toSentenceCase, formToastError} from "@/lib/utils";
+import {fetchLogin} from "@/lib/api";
 
 export default function Login() {
 	const [email, setEmail] = useState("");
@@ -16,33 +18,19 @@ export default function Login() {
 	const handleSubmit = async (e: FormEvent) => {
 		e.preventDefault();
 
-		if (email == "" || password == "") return;
-
-		interface LoginData {
-			email: string;
-			password: string;
-		}
+		if (email == "") return formToastError("Email is required");
+		if (password == "") return formToastError("Password is required");
 
 		let loginData: LoginData = {
 			email,
 			password
 		};
 
-		const res = await fetch("/api/auth/login", {
-			method: "POST",
-			headers: {
-				"Content-Type": "application/json"
-			},
-			body: JSON.stringify(loginData)
-		});
-
-		const data = await res.json();
-
-		if (!res.ok) {
-			router.push("/dashboard");
-		}
-
+		const data = await fetchLogin(loginData);
 		console.log(data);
+
+		if (data["error"]) return formToastError(toSentenceCase(data["error"]));
+		else router.push("/dashboard");
 	};
 
 	return (
@@ -69,8 +57,8 @@ export default function Login() {
 								Contraseña
 								<input onChange={e => setPassword(e.target.value)} value={password} className="border-2 rounded-lg text-base p-1.5" type="password" />
 							</label>
-							<Button variant="secondary" onClick={handleSubmit} className="w-fit place-self-center mt-10 px-7 py-7 font-semibold text-base sm:text-lg shadow-lg flex flex-row gap-4">
-								<svg className="size-6" fill="none" stroke="currentColor" strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" viewBox="0 0 24 24">
+							<Button type="submit" variant="secondary" onClick={handleSubmit} className="w-fit place-self-center mt-10 px-7 py-7 font-semibold text-base sm:text-lg shadow-lg flex flex-row gap-4">
+								<svg className="size-6" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" viewBox="0 0 24 24">
 									<path stroke="none" d="M0 0h24v24H0z" fill="none" />
 									<path d="M9 8v-2a2 2 0 0 1 2 -2h7a2 2 0 0 1 2 2v12a2 2 0 0 1 -2 2h-7a2 2 0 0 1 -2 -2v-2" />
 									<path d="M3 12h13l-3 -3" />
