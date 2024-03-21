@@ -7,6 +7,8 @@ import Link from "next/link";
 import UserTypeSelect from "@/components/ui/user-type-select";
 import styles from "@/ui/register.module.css";
 import {useRouter} from "next/navigation";
+import {toSentenceCase, formToastError} from "@/lib/utils";
+import {fetchRegister} from "@/lib/api";
 
 export default function Register() {
 	const [email, setEmail] = useState("");
@@ -22,17 +24,13 @@ export default function Register() {
 	const handleSubmit = async (e: FormEvent) => {
 		e.preventDefault();
 
-		if (email == "" || username == "" || password == "" || confirmPassword == "") return;
-		if (password != confirmPassword) return;
-
-		interface RegisterData {
-			email: string;
-			username: string;
-			password: string;
-			type: string;
-			community_code?: string;
-			community_name?: string;
-		}
+		if (email == "") return formToastError("Email is required");
+		if (username == "") return formToastError("Username is required");
+		if (password == "") return formToastError("Password is required");
+		if (password != confirmPassword) return formToastError("Passwords do not match");
+		if (userType != "neighbor" && userType != "admin") return formToastError("User type is invalid");
+		if (userType == "neighbor" && communityCode == "") return formToastError("Community code is required");
+		if (userType == "admin" && communityName == "") return formToastError("Community name is required");
 
 		let registerData: RegisterData = {
 			email,
@@ -44,21 +42,11 @@ export default function Register() {
 		if (userType == "neighbor") registerData["community_code"] = communityCode;
 		else if (userType == "admin") registerData["community_name"] = communityName;
 
-		const res = await fetch("/api/auth/register", {
-			method: "POST",
-			headers: {
-				"Content-Type": "application/json"
-			},
-			body: JSON.stringify(registerData)
-		});
-
-		const data = await res.json();
-
-		if (!res.ok) {
-			router.push("/dashboard");
-		}
-
+		const data = await fetchRegister(registerData);
 		console.log(data);
+
+		if (data["error"]) return formToastError(toSentenceCase(data["error"]));
+		else router.push("/dashboard");
 	};
 
 	return (
@@ -109,10 +97,13 @@ export default function Register() {
 									<input onChange={e => setCommunityName(e.target.value)} value={communityName} className="border-2 rounded-lg text-base p-1.5" type="text" />
 								</label>
 							)}
-							<Button variant="secondary" onClick={handleSubmit} className="w-fit place-self-center mt-10 px-7 py-7 font-semibold text-base sm:text-lg shadow-lg flex flex-row gap-4">
-								<svg className="size-6" fill="none" stroke="currentColor" strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" viewBox="0 0 24 24">
-									<path stroke="none" d="M0 0h24v24H0z"></path>
-									<path d="M8 7a4 4 0 1 0 8 0 4 4 0 0 0-8 0M16 19h6M19 16v6M6 21v-2a4 4 0 0 1 4-4h4"></path>
+							<Button type="submit" variant="secondary" onClick={handleSubmit} className="w-fit place-self-center mt-10 px-7 py-7 font-semibold text-base sm:text-lg shadow-lg flex flex-row gap-4">
+								<svg className="size-6" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" viewBox="0 0 24 24">
+									<path stroke="none" d="M0 0h24v24H0z" fill="none" />
+									<path d="M8 7a4 4 0 1 0 8 0a4 4 0 0 0 -8 0" />
+									<path d="M16 19h6" />
+									<path d="M19 16v6" />
+									<path d="M6 21v-2a4 4 0 0 1 4 -4h4" />
 								</svg>
 								Crear Cuenta
 							</Button>
