@@ -1,14 +1,14 @@
 "use client";
 
-import {useState, FormEvent} from "react";
 import {Button} from "@/components/ui/button";
 import {ScrollArea} from "@/components/ui/scroll-area";
-import Link from "next/link";
 import UserTypeSelect from "@/components/ui/user-type-select";
-import styles from "@/ui/register.module.css";
-import {useRouter} from "next/navigation";
-import {toSentenceCase, formToastError} from "@/lib/utils";
 import {fetchRegister} from "@/lib/api";
+import {formToastError, toSentenceCase} from "@/lib/utils";
+import styles from "@/ui/register.module.css";
+import Link from "next/link";
+import {useRouter} from "next/navigation";
+import {FormEvent, useState} from "react";
 
 export default function Register() {
 	const [email, setEmail] = useState("");

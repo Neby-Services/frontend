@@ -1,13 +1,13 @@
 "use client";
 
-import {useState, FormEvent} from "react";
 import {Button} from "@/components/ui/button";
 import {ScrollArea} from "@/components/ui/scroll-area";
-import Link from "next/link";
-import styles from "@/ui/login.module.css";
-import {useRouter} from "next/navigation";
-import {toSentenceCase, formToastError} from "@/lib/utils";
 import {fetchLogin} from "@/lib/api";
+import {formToastError, toSentenceCase} from "@/lib/utils";
+import styles from "@/ui/login.module.css";
+import Link from "next/link";
+import {useRouter} from "next/navigation";
+import {FormEvent, useState} from "react";
 
 export default function Login() {
 	const [email, setEmail] = useState("");
