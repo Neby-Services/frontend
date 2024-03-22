@@ -1,7 +1,7 @@
-import type {Metadata} from "next";
 import "@fontsource-variable/montserrat";
-import "./globals.css";
+import type {Metadata} from "next";
 import {Toaster} from "sonner";
+import "./globals.css";
 
 export const metadata: Metadata = {
 	title: "Neby",
@@ -17,7 +17,16 @@ export default function RootLayout({
 		<html lang="es">
 			<body>
 				{children}
-				<Toaster expand={true} />
+				<Toaster
+					expand={true}
+					toastOptions={{
+						classNames: {
+							toast: "font-sans",
+							title: "font-medium",
+							description: "font-normal"
+						}
+					}}
+				/>
 			</body>
 		</html>
 	);
