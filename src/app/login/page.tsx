@@ -1,36 +1,45 @@
 "use client";
 
-import {useState, FormEvent} from "react";
 import {Button} from "@/components/ui/button";
 import {ScrollArea} from "@/components/ui/scroll-area";
-import Link from "next/link";
-import styles from "@/ui/login.module.css";
-import {useRouter} from "next/navigation";
-import {toSentenceCase, formToastError} from "@/lib/utils";
 import {fetchLogin} from "@/lib/api";
+import {formToastError, toSentenceCase} from "@/lib/utils";
+import styles from "@/ui/login.module.css";
+import {Loader2} from "lucide-react";
+import Link from "next/link";
+import {useRouter} from "next/navigation";
+import {FormEvent, useState} from "react";
 
 export default function Login() {
 	const [email, setEmail] = useState("");
 	const [password, setPassword] = useState("");
+
+	const [loading, setLoading] = useState(false);
 
 	const router = useRouter();
 
 	const handleSubmit = async (e: FormEvent) => {
 		e.preventDefault();
 
-		if (email == "") return formToastError("Email is required");
-		if (password == "") return formToastError("Password is required");
+		if (loading) return;
+		setLoading(true);
 
-		let loginData: LoginData = {
-			email,
-			password
-		};
+		if (email == "") formToastError("Email is required");
+		else if (password == "") formToastError("Password is required");
+		else {
+			let loginData: LoginData = {
+				email,
+				password
+			};
 
-		const data = await fetchLogin(loginData);
-		console.log(data);
+			const data = await fetchLogin(loginData);
+			console.log(data);
 
-		if (data["error"]) return formToastError(toSentenceCase(data["error"]));
-		else router.push("/dashboard");
+			if (data["error"]) formToastError(toSentenceCase(data["error"]));
+			else router.push("/dashboard");
+		}
+
+		setLoading(false);
 	};
 
 	return (
@@ -57,14 +66,23 @@ export default function Login() {
 								Contraseña
 								<input onChange={e => setPassword(e.target.value)} value={password} className="border-2 rounded-lg text-base p-1.5" type="password" />
 							</label>
-							<Button type="submit" variant="secondary" onClick={handleSubmit} className="w-fit place-self-center mt-10 px-7 py-7 font-semibold text-base sm:text-lg shadow-lg flex flex-row gap-4">
-								<svg className="size-6" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" viewBox="0 0 24 24">
-									<path stroke="none" d="M0 0h24v24H0z" fill="none" />
-									<path d="M9 8v-2a2 2 0 0 1 2 -2h7a2 2 0 0 1 2 2v12a2 2 0 0 1 -2 2h-7a2 2 0 0 1 -2 -2v-2" />
-									<path d="M3 12h13l-3 -3" />
-									<path d="M13 15l3 -3" />
-								</svg>
-								Iniciar Sesión
+							<Button disabled={loading} type="submit" variant="secondary" onClick={handleSubmit} className="w-fit place-self-center mt-10 px-7 py-7 font-semibold text-base sm:text-lg shadow-lg flex flex-row gap-4">
+								{loading ? (
+									<>
+										<Loader2 className="size-6 animate-spin" />
+										Loading
+									</>
+								) : (
+									<>
+										<svg className="size-6" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" viewBox="0 0 24 24">
+											<path stroke="none" d="M0 0h24v24H0z" fill="none" />
+											<path d="M9 8v-2a2 2 0 0 1 2 -2h7a2 2 0 0 1 2 2v12a2 2 0 0 1 -2 2h-7a2 2 0 0 1 -2 -2v-2" />
+											<path d="M3 12h13l-3 -3" />
+											<path d="M13 15l3 -3" />
+										</svg>
+										Iniciar Sesión
+									</>
+								)}
 							</Button>
 						</form>
 					</div>

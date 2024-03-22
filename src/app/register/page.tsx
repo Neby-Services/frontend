@@ -1,14 +1,15 @@
 "use client";
 
-import {useState, FormEvent} from "react";
 import {Button} from "@/components/ui/button";
 import {ScrollArea} from "@/components/ui/scroll-area";
-import Link from "next/link";
 import UserTypeSelect from "@/components/ui/user-type-select";
-import styles from "@/ui/register.module.css";
-import {useRouter} from "next/navigation";
-import {toSentenceCase, formToastError} from "@/lib/utils";
 import {fetchRegister} from "@/lib/api";
+import {formToastError, toSentenceCase} from "@/lib/utils";
+import styles from "@/ui/register.module.css";
+import {Loader2} from "lucide-react";
+import Link from "next/link";
+import {useRouter} from "next/navigation";
+import {FormEvent, useState} from "react";
 
 export default function Register() {
 	const [email, setEmail] = useState("");
@@ -19,34 +20,42 @@ export default function Register() {
 	const [communityCode, setCommunityCode] = useState("");
 	const [communityName, setCommunityName] = useState("");
 
+	const [loading, setLoading] = useState(false);
+
 	const router = useRouter();
 
 	const handleSubmit = async (e: FormEvent) => {
 		e.preventDefault();
 
-		if (email == "") return formToastError("Email is required");
-		if (username == "") return formToastError("Username is required");
-		if (password == "") return formToastError("Password is required");
-		if (password != confirmPassword) return formToastError("Passwords do not match");
-		if (userType != "neighbor" && userType != "admin") return formToastError("User type is invalid");
-		if (userType == "neighbor" && communityCode == "") return formToastError("Community code is required");
-		if (userType == "admin" && communityName == "") return formToastError("Community name is required");
+		if (loading) return;
+		setLoading(true);
 
-		let registerData: RegisterData = {
-			email,
-			username,
-			password,
-			type: userType
-		};
+		if (email == "") formToastError("Email is required");
+		else if (username == "") formToastError("Username is required");
+		else if (password == "") formToastError("Password is required");
+		else if (password != confirmPassword) formToastError("Passwords do not match");
+		else if (userType != "neighbor" && userType != "admin") formToastError("User type is invalid");
+		else if (userType == "neighbor" && communityCode == "") formToastError("Community code is required");
+		else if (userType == "admin" && communityName == "") formToastError("Community name is required");
+		else {
+			let registerData: RegisterData = {
+				email,
+				username,
+				password,
+				type: userType
+			};
 
-		if (userType == "neighbor") registerData["community_code"] = communityCode;
-		else if (userType == "admin") registerData["community_name"] = communityName;
+			if (userType == "neighbor") registerData["community_code"] = communityCode;
+			else if (userType == "admin") registerData["community_name"] = communityName;
 
-		const data = await fetchRegister(registerData);
-		console.log(data);
+			const data = await fetchRegister(registerData);
+			console.log(data);
 
-		if (data["error"]) return formToastError(toSentenceCase(data["error"]));
-		else router.push("/dashboard");
+			if (data["error"]) formToastError(toSentenceCase(data["error"]));
+			else router.push("/dashboard");
+		}
+
+		setLoading(false);
 	};
 
 	return (
@@ -97,15 +106,24 @@ export default function Register() {
 									<input onChange={e => setCommunityName(e.target.value)} value={communityName} className="border-2 rounded-lg text-base p-1.5" type="text" />
 								</label>
 							)}
-							<Button type="submit" variant="secondary" onClick={handleSubmit} className="w-fit place-self-center mt-10 px-7 py-7 font-semibold text-base sm:text-lg shadow-lg flex flex-row gap-4">
-								<svg className="size-6" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" viewBox="0 0 24 24">
-									<path stroke="none" d="M0 0h24v24H0z" fill="none" />
-									<path d="M8 7a4 4 0 1 0 8 0a4 4 0 0 0 -8 0" />
-									<path d="M16 19h6" />
-									<path d="M19 16v6" />
-									<path d="M6 21v-2a4 4 0 0 1 4 -4h4" />
-								</svg>
-								Crear Cuenta
+							<Button disabled={loading} type="submit" variant="secondary" onClick={handleSubmit} className="w-fit place-self-center mt-10 px-7 py-7 font-semibold text-base sm:text-lg shadow-lg flex flex-row gap-4">
+								{loading ? (
+									<>
+										<Loader2 className="size-6 animate-spin" />
+										Loading
+									</>
+								) : (
+									<>
+										<svg className="size-6" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" viewBox="0 0 24 24">
+											<path stroke="none" d="M0 0h24v24H0z" fill="none" />
+											<path d="M8 7a4 4 0 1 0 8 0a4 4 0 0 0 -8 0" />
+											<path d="M16 19h6" />
+											<path d="M19 16v6" />
+											<path d="M6 21v-2a4 4 0 0 1 4 -4h4" />
+										</svg>
+										Crear Cuenta
+									</>
+								)}
 							</Button>
 						</form>
 					</div>
