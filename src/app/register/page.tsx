@@ -2,7 +2,7 @@
 
 import {Button} from "@/components/ui/button";
 import {ScrollArea} from "@/components/ui/scroll-area";
-import UserTypeSelect from "@/components/ui/user-type-select";
+import UserTypeSelect from "@/components/user-type-select";
 import {fetchRegister} from "@/lib/api";
 import {formToastError, toSentenceCase} from "@/lib/utils";
 import styles from "@/ui/register.module.css";
