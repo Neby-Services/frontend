@@ -9,7 +9,7 @@ const fetchData = async (input: RequestInfo, init?: RequestInit) => {
 	return data;
 };
 
-export const fetchLogin = async (body: LoginData) => {
+export const fetchLogin = async (body: LoginSentData) => {
 	return await fetchData(`${process.env["NEXT_PUBLIC_API_PATH"]}/auth/login`, {
 		method: "POST",
 		body: JSON.stringify(body),
@@ -17,10 +17,14 @@ export const fetchLogin = async (body: LoginData) => {
 	});
 };
 
-export const fetchRegister = async (body: RegisterData) => {
+export const fetchRegister = async (body: RegisterSentData) => {
 	return await fetchData(`${process.env["NEXT_PUBLIC_API_PATH"]}/auth/register`, {
 		method: "POST",
 		body: JSON.stringify(body),
 		headers: {"Content-Type": "application/json"}
 	});
+};
+
+export const fetchServices = async () => {
+	return await fetchData(`${process.env["NEXT_PUBLIC_API_PATH"]}/services`);
 };
