@@ -1,8 +1,7 @@
-/** @type {import('tailwindcss').Config} */
-export default {
-	darkMode: ["class"],
-	content: ["./pages/**/*.{ts,tsx}", "./components/**/*.{ts,tsx}", "./app/**/*.{ts,tsx}", "./src/**/*.{astro,html,js,jsx,md,mdx,svelte,ts,tsx,vue}"],
-	prefix: "",
+import type {Config} from "tailwindcss";
+
+const config: Config = {
+	content: ["./src/pages/**/*.{js,ts,jsx,tsx,mdx}", "./src/components/**/*.{js,ts,jsx,tsx,mdx}", "./src/app/**/*.{js,ts,jsx,tsx,mdx}"],
 	theme: {
 		container: {
 			center: true,
@@ -47,6 +46,9 @@ export default {
 					foreground: "hsl(var(--card-foreground))"
 				}
 			},
+			fontFamily: {
+				sans: "var(--font-sans)"
+			},
 			borderRadius: {
 				lg: "var(--radius)",
 				md: "calc(var(--radius) - 2px)",
@@ -69,4 +71,6 @@ export default {
 		}
 	},
 	plugins: [require("tailwindcss-animate")]
-};
+} satisfies Config;
+
+export default config;
