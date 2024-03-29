@@ -38,17 +38,17 @@ export default function Register() {
 		else if (userType == "neighbor" && communityCode == "") formToastError("Community code is required");
 		else if (userType == "admin" && communityName == "") formToastError("Community name is required");
 		else {
-			let registerData: RegisterData = {
+			let registerSentData: RegisterSentData = {
 				email,
 				username,
 				password,
 				type: userType
 			};
 
-			if (userType == "neighbor") registerData["community_code"] = communityCode;
-			else if (userType == "admin") registerData["community_name"] = communityName;
+			if (userType == "neighbor") registerSentData["community_code"] = communityCode;
+			else if (userType == "admin") registerSentData["community_name"] = communityName;
 
-			const data = await fetchRegister(registerData);
+			const data = await fetchRegister(registerSentData);
 			console.log(data);
 
 			if (data["error"]) formToastError(toSentenceCase(data["error"]));
@@ -70,39 +70,39 @@ export default function Register() {
 								<path d="M5 12l6 6" />
 								<path d="M5 12l6 -6" />
 							</svg>
-							Volver
+							Go Back
 						</Link>
-						<h1 className="text-3xl sm:text-4xl font-bold text-center mb-12">Crear Cuenta</h1>
+						<h1 className="text-3xl sm:text-4xl font-bold text-center mb-12">Create Account</h1>
 						<form onSubmit={e => e.preventDefault()} className="flex flex-col flex-1">
 							<label className="flex flex-col text-sm sm:text-lg font-semibold gap-2 mb-6">
 								Email
 								<input onChange={e => setEmail(e.target.value)} value={email} className="border-2 rounded-lg text-base p-1.5" type="email" />
 							</label>
 							<label className="flex flex-col text-sm sm:text-lg font-semibold gap-2 mb-6">
-								Nombre de usuario
+								Username
 								<input onChange={e => setUsername(e.target.value)} value={username} className="border-2 rounded-lg text-base p-1.5" type="text" />
 							</label>
 							<label className="flex flex-col text-sm sm:text-lg font-semibold gap-2 mb-6">
-								Contraseña
+								Password
 								<input onChange={e => setPassword(e.target.value)} value={password} className="border-2 rounded-lg text-base p-1.5" type="password" />
 							</label>
 							<label className="flex flex-col text-sm sm:text-lg font-semibold gap-2 mb-6">
-								Confirmar contraseña
+								Confirm Password
 								<input onChange={e => setConfirmPassword(e.target.value)} value={confirmPassword} className="border-2 rounded-lg text-base p-1.5" type="password" />
 							</label>
 							<div className="flex flex-col text-sm sm:text-lg font-semibold gap-2 mb-6">
-								<label>Tipo de usuario</label>
+								<label>User Type</label>
 								<UserTypeSelect value={userType} setValue={setUserType} />
 							</div>
 							{userType === "neighbor" && (
 								<label className="flex flex-col text-sm sm:text-lg font-semibold gap-2 mb-6">
-									<span>Código de comunidad</span>
+									<span>Community Code</span>
 									<input onChange={e => setCommunityCode(e.target.value)} value={communityCode} className="border-2 rounded-lg text-base p-1.5" type="text" />
 								</label>
 							)}
 							{userType === "admin" && (
 								<label className="flex flex-col text-sm sm:text-lg font-semibold gap-2 mb-6">
-									<span>Nombre de la comunidad</span>
+									<span>Community Name</span>
 									<input onChange={e => setCommunityName(e.target.value)} value={communityName} className="border-2 rounded-lg text-base p-1.5" type="text" />
 								</label>
 							)}
@@ -121,7 +121,7 @@ export default function Register() {
 											<path d="M19 16v6" />
 											<path d="M6 21v-2a4 4 0 0 1 4 -4h4" />
 										</svg>
-										Crear Cuenta
+										Register
 									</>
 								)}
 							</Button>

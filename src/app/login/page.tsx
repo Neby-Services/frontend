@@ -27,12 +27,12 @@ export default function Login() {
 		if (email == "") formToastError("Email is required");
 		else if (password == "") formToastError("Password is required");
 		else {
-			let loginData: LoginData = {
+			let loginSentData: LoginSentData = {
 				email,
 				password
 			};
 
-			const data = await fetchLogin(loginData);
+			const data = await fetchLogin(loginSentData);
 			console.log(data);
 
 			if (data["error"]) formToastError(toSentenceCase(data["error"]));
@@ -54,16 +54,16 @@ export default function Login() {
 								<path d="M5 12l6 6" />
 								<path d="M5 12l6 -6" />
 							</svg>
-							Volver
+							Go Back
 						</Link>
-						<h1 className="text-3xl sm:text-4xl font-bold text-center mb-12">Iniciar Sesión</h1>
+						<h1 className="text-3xl sm:text-4xl font-bold text-center mb-12">Login</h1>
 						<form onSubmit={e => e.preventDefault()} className="flex flex-col flex-1">
 							<label className="flex flex-col text-sm sm:text-lg font-semibold gap-2 mb-6">
 								Email
 								<input onChange={e => setEmail(e.target.value)} value={email} className="border-2 rounded-lg text-base p-1.5" type="email" />
 							</label>
 							<label className="flex flex-col text-sm sm:text-lg font-semibold gap-2 mb-6">
-								Contraseña
+								Password
 								<input onChange={e => setPassword(e.target.value)} value={password} className="border-2 rounded-lg text-base p-1.5" type="password" />
 							</label>
 							<Button disabled={loading} type="submit" variant="secondary" onClick={handleSubmit} className="w-fit place-self-center mt-10 px-7 py-7 font-semibold text-base sm:text-lg shadow-lg flex flex-row gap-4">
@@ -80,7 +80,7 @@ export default function Login() {
 											<path d="M3 12h13l-3 -3" />
 											<path d="M13 15l3 -3" />
 										</svg>
-										Iniciar Sesión
+										Login
 									</>
 								)}
 							</Button>

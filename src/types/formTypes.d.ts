@@ -1,4 +1,4 @@
-interface RegisterData {
+interface RegisterSentData {
 	email: string;
 	username: string;
 	password: string;
@@ -7,7 +7,7 @@ interface RegisterData {
 	community_name?: string;
 }
 
-interface LoginData {
+interface LoginSentData {
 	email: string;
 	password: string;
 }
