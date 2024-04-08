@@ -1,7 +1,10 @@
 interface ServiceReceivedData {
 	id: string;
-	community_id: string;
 	creator_id: string;
+	creator: {
+		id: string;
+		username: string;
+	};
 	buyer_id?: string;
 	title: string;
 	description: string;
