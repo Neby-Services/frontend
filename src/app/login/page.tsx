@@ -13,6 +13,7 @@ import {FormEvent, useState} from "react";
 export default function Login() {
 	const [email, setEmail] = useState("");
 	const [password, setPassword] = useState("");
+	const [passwordVisible, setPasswordVisible] = useState(false);
 
 	const [loading, setLoading] = useState(false);
 
@@ -64,7 +65,27 @@ export default function Login() {
 							</label>
 							<label className="flex flex-col text-sm sm:text-lg font-semibold gap-2 mb-6">
 								Password
-								<input onChange={e => setPassword(e.target.value)} value={password} className="border-2 rounded-lg text-base p-1.5" type="password" />
+								<div className="relative">
+									<button onClick={() => setPasswordVisible(!passwordVisible)}>
+										<svg className="absolute top-1/2 -translate-y-1/2 right-4 size-6" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" viewBox="0 0 24 24">
+											{passwordVisible ? (
+												<>
+													<path stroke="none" d="M0 0h24v24H0z" fill="none" />
+													<path d="M10.585 10.587a2 2 0 0 0 2.829 2.828" />
+													<path d="M16.681 16.673a8.717 8.717 0 0 1 -4.681 1.327c-3.6 0 -6.6 -2 -9 -6c1.272 -2.12 2.712 -3.678 4.32 -4.674m2.86 -1.146a9.055 9.055 0 0 1 1.82 -.18c3.6 0 6.6 2 9 6c-.666 1.11 -1.379 2.067 -2.138 2.87" />
+													<path d="M3 3l18 18" />
+												</>
+											) : (
+												<>
+													<path stroke="none" d="M0 0h24v24H0z" fill="none" />
+													<path d="M10 12a2 2 0 1 0 4 0a2 2 0 0 0 -4 0" />
+													<path d="M21 12c-2.4 4 -5.4 6 -9 6c-3.6 0 -6.6 -2 -9 -6c2.4 -4 5.4 -6 9 -6c3.6 0 6.6 2 9 6" />
+												</>
+											)}
+										</svg>
+									</button>
+									<input onChange={e => setPassword(e.target.value)} value={password} className="border-2 rounded-lg text-base p-1.5 w-full pr-12" type={passwordVisible ? "text" : "password"} />
+								</div>
 							</label>
 							<Button disabled={loading} type="submit" variant="secondary" onClick={handleSubmit} className="w-fit place-self-center mt-10 px-7 py-7 font-semibold text-base sm:text-lg shadow-lg flex flex-row gap-4">
 								{loading ? (
