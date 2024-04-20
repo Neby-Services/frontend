@@ -2,7 +2,9 @@
 
 import Header from "@/components/header";
 import ServiceCard from "@/components/service-card";
+import {logout} from "@/lib/actions";
 import {fetchServices} from "@/lib/api";
+import {useRouter} from "next/navigation";
 import {useEffect, useState} from "react";
 
 export default function Dashboard() {
@@ -10,12 +12,22 @@ export default function Dashboard() {
 
 	const [loading, setLoading] = useState(false);
 
+	const router = useRouter();
+
 	useEffect(() => {
 		const fetchData = async () => {
-			const data = await fetchServices();
-			console.log(data);
-			setServices(data["services"]);
-			setLoading(false);
+			try {
+				const data = await fetchServices();
+				console.log(data);
+				if (!data.error) setServices(data["services"]);
+				else {
+					logout();
+					router.push("/");
+				}
+				setLoading(false);
+			} catch (error) {
+				console.log(error);
+			}
 		};
 
 		setLoading(true);
