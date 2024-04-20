@@ -23,12 +23,12 @@ export default function Header() {
 							<nav className="max-xl:hidden">
 								<ul className="flex flex-row items-center gap-6 font-medium text-lg">
 									<li>
-										<Link className="hover:underline underline-offset-8" href="/dashboard">
+										<Link className="hover:underline underline-offset-8 decoration-2" href="/dashboard">
 											Home
 										</Link>
 									</li>
 									<li>
-										<Link className="hover:underline underline-offset-8" href="/achievements">
+										<Link className="hover:underline underline-offset-8 decoration-2" href="/achievements">
 											Achievements
 										</Link>
 									</li>
@@ -127,12 +127,12 @@ export default function Header() {
 								<nav>
 									<ul className="flex flex-col gap-2 font-medium text-lg">
 										<li>
-											<Link className="hover:underline underline-offset-8" href="/dashboard">
+											<Link className="hover:underline underline-offset-8 decoration-2" href="/dashboard">
 												Home
 											</Link>
 										</li>
 										<li>
-											<Link className="hover:underline underline-offset-8" href="/achievements">
+											<Link className="hover:underline underline-offset-8 decoration-2" href="/achievements">
 												Achievements
 											</Link>
 										</li>

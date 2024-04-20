@@ -48,7 +48,7 @@ export default function Login() {
 			<div className="h-svh py-8 grid place-content-center">
 				<ScrollArea className="w-[95vw] max-w-[600px] max-h-svh bg-background shadow-xl rounded-xl">
 					<div className="px-10 py-8 sm:px-16 sm:py-10">
-						<Link className="flex flex-row gap-1 mb-3 -translate-x-4 font-medium text-sm transition-all hover:underline" href="/">
+						<Link className="flex flex-row gap-1 mb-3 -translate-x-4 font-medium text-sm hover:underline underline-offset-4" href="/">
 							<svg className="size-5" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1" strokeLinecap="round" strokeLinejoin="round">
 								<path stroke="none" d="M0 0h24v24H0z" fill="none" />
 								<path d="M5 12l14 0" />
