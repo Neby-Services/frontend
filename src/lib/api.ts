@@ -4,7 +4,10 @@ const fetchData = async (input: RequestInfo, init?: RequestInit) => {
 	try {
 		data = await response.json();
 	} catch (e) {
-		data = {error: "Something went wrong"};
+		data = {error: "something went wrong"};
+	}
+	if (!response.ok) {
+		data["status"] = response.status;
 	}
 	return data;
 };

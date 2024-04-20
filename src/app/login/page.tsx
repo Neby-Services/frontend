@@ -66,7 +66,7 @@ export default function Login() {
 							<label className="flex flex-col text-sm sm:text-lg font-semibold gap-2 mb-6">
 								Password
 								<div className="relative">
-									<button onClick={() => setPasswordVisible(!passwordVisible)}>
+									<button type="button" tabIndex={-1} onClick={() => setPasswordVisible(!passwordVisible)}>
 										<svg className="absolute top-1/2 -translate-y-1/2 right-4 size-6" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" viewBox="0 0 24 24">
 											{passwordVisible ? (
 												<>
