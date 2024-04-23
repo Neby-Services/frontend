@@ -76,3 +76,20 @@
 		@apply bg-background text-foreground;
 	}
 }
+
+.highlight {
+	position: relative;
+}
+
+.highlight::after {
+	content: "";
+	position: absolute;
+	z-index: -1;
+	top: 50%;
+	left: 50%;
+	width: 110%;
+	height: 135%;
+	background-color: hsl(var(--secondary));
+	box-sizing: border-box;
+	transform: translate(-50%, -50%) skew(-5deg) rotate(4deg);
+}
