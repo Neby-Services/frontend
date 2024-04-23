@@ -13,7 +13,7 @@ export default function LogoAnimation() {
 		() => {
 			gsap.to("svg", {
 				duration: 2,
-				y: gsap.utils.wrap(["-70%", "-58%", "-46%", "-36%", "-22%"]),
+				y: gsap.utils.wrap(["-70%", "-58%", "-46%", "-34%", "-22%"]),
 				opacity: gsap.utils.wrap([1, 0.5, 0.3, 0.2, 0.1]),
 				repeat: -1,
 				repeatDelay: 3,
