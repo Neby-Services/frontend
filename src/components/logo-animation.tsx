@@ -11,16 +11,20 @@ export default function LogoAnimation() {
 
 	useGSAP(
 		() => {
-			gsap.to("svg", {
-				duration: 2,
-				y: gsap.utils.wrap(["-70%", "-60%", "-50%", "-40%", "-30%"]),
-				opacity: gsap.utils.wrap([1, 0.8, 0.6, 0.4, 0.2]),
-				repeat: -1,
-				repeatDelay: 3,
-				yoyo: true,
-				yoyoEase: "elastic.out",
-				ease: "elastic.out"
-			});
+			gsap.fromTo(
+				"svg",
+				{
+					y: gsap.utils.wrap(["-70%", "-70%", "-58%", "-46%", "-34%"]),
+					opacity: gsap.utils.wrap([1, 0.8, 0.6, 0.4, 0.2])
+				},
+				{
+					duration: 1,
+					y: gsap.utils.wrap(["-70%", "-58%", "-46%", "-34%", "-22%"]),
+					opacity: gsap.utils.wrap([1, 0.6, 0.4, 0.2, 0]),
+					repeat: -1,
+					ease: "none"
+				}
+			);
 		},
 		{scope: container}
 	);
