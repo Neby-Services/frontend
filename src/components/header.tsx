@@ -65,12 +65,36 @@ export default function Header() {
 								</svg>
 							</span>
 							<div className="w-16">
-								<Avatar className="size-14">
-									<div className="bg-secondary size-full grid place-content-center text-background font-bold text-2xl overflow-hidden">
-										<p>U</p>
-									</div>
-								</Avatar>
+								<button onClick={() => setMenuOpen(!menuOpen)}>
+									<Avatar className="size-14">
+										<div className="bg-secondary size-full grid place-content-center text-background font-bold text-2xl overflow-hidden">
+											<p>U</p>
+										</div>
+									</Avatar>
+								</button>
 							</div>
+							{menuOpen && (
+									<div className="fixed w-5/6 max-w-sm bg-white h-screen shadow-lg border border-gray-300 z-30 top-[7rem] right-0 flex flex-col py-6 px-8 overflow-y-auto">
+										<ul className="flex flex-col gap-2 font-medium text-lg">
+											<form className="relative mb-6">
+												<svg className="absolute top-1/2 -translate-y-1/2 left-4 size-6" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" viewBox="0 0 24 24">
+													<path stroke="none" d="M0 0h24v24H0z" fill="none"/>
+													<path d="M10 10m-7 0a7 7 0 1 0 14 0a7 7 0 1 0 -14 0"/>
+													<path d="M21 21l-6 -6"/>
+												</svg>
+												<input className="bg-slate-200 pl-12 px-4 py-3 font-medium rounded-full w-full" type="text" placeholder="Search..."/>
+											</form>
+											<li>element 1</li>
+											<li>element 2</li>
+											<li>element 3</li>
+											<li>
+												<Link href="/">
+													Log out
+												</Link>
+											</li>
+										</ul>
+									</div>
+							)}
 						</span>
 					</div>
 					<div className="xl:hidden">
@@ -134,6 +158,11 @@ export default function Header() {
 										<li>
 											<Link className="hover:underline underline-offset-8" href="/achievements">
 												Achievements
+											</Link>
+										</li>
+										<li>
+											<Link className="hover:underline underline-offset-8" href="/">
+												Log out
 											</Link>
 										</li>
 									</ul>
