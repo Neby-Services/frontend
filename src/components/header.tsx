@@ -8,7 +8,7 @@ import {useState} from "react";
 
 export default function Header() {
 	const [menuOpen, setMenuOpen] = useState(false);
-
+	const [userMenu, setUserMenu] = useState(false);
 	return (
 		<header className="relative w-full z-10">
 			<div className="fixed flex justify-between items-center w-full h-20 xl:h-28 px-6 md:px-16 bg-background shadow-lg">
@@ -65,14 +65,42 @@ export default function Header() {
 								</svg>
 							</span>
 							<div className="w-16">
-								<Avatar className="size-14">
-									<div className="bg-secondary size-full grid place-content-center text-background font-bold text-2xl overflow-hidden">
-										<p>U</p>
-									</div>
-								</Avatar>
+								<button className="hover:scale-110 transition-all" onClick={() => setUserMenu(!userMenu)}>
+									<Avatar className="size-14">
+										<div className="bg-secondary size-full grid place-content-center text-background font-bold text-2xl overflow-hidden">
+											<p>U</p>
+										</div>
+									</Avatar>
+								</button>
 							</div>
 						</span>
 					</div>
+
+					{userMenu && (
+									<div className="fixed w-5/6 max-w-sm bg-white h-3/6 shadow-lg border border-gray-300 z-30 top-[7rem] right-0 flex flex-col py-6 px-8 overflow-y-auto">
+										<ul className="flex flex-col gap-4 font-medium text-lg">
+											<li>
+											<Link className="hover:underline underline-offset-8 decoration-2" href="/">
+												Element 1
+											</Link>
+											</li>
+											<Link className="hover:underline underline-offset-8 decoration-2" href="/">
+												Element 2
+											</Link>
+											<li>
+											<Link className="hover:underline underline-offset-8 decoration-2" href="/">
+												Element 3
+											</Link>
+											</li>
+											<li>
+											<Link className="hover:underline underline-offset-8 decoration-2" href="/">
+												Log out
+											</Link>
+											</li>
+										</ul>
+									</div>
+							)}
+
 					<div className="xl:hidden">
 						<button onClick={() => setMenuOpen(!menuOpen)}>
 							<svg className="size-10" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" viewBox="0 0 24 24">
@@ -134,6 +162,11 @@ export default function Header() {
 										<li>
 											<Link className="hover:underline underline-offset-8 decoration-2" href="/achievements">
 												Achievements
+											</Link>
+										</li>
+										<li>
+											<Link className="hover:underline underline-offset-8 decoration-2" href="/">
+												Log out
 											</Link>
 										</li>
 									</ul>
