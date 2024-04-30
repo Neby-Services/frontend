@@ -2,12 +2,30 @@
 
 import {Avatar} from "@/components/ui/avatar";
 import {Button} from "@/components/ui/button";
+import {logout} from "@/lib/actions";
 import {AnimatePresence, motion} from "framer-motion";
 import Link from "next/link";
-import {useState} from "react";
+import {useRouter} from "next/navigation";
+import {useEffect, useRef, useState} from "react";
 
 export default function Header() {
 	const [menuOpen, setMenuOpen] = useState(false);
+	const [userMenuOpen, setUserMenuOpen] = useState(false);
+
+	const userMenuRef = useRef<HTMLDivElement>(null);
+	const userMenuToggleRef = useRef<HTMLButtonElement>(null);
+
+	const router = useRouter();
+
+	const handleUserMenu = (event: MouseEvent | TouchEvent) => {
+		if (!userMenuOpen && userMenuToggleRef.current && userMenuToggleRef.current.contains(event.target as Node)) setUserMenuOpen(true);
+		if (userMenuRef.current && !userMenuRef.current.contains(event.target as Node)) setUserMenuOpen(false);
+	};
+
+	useEffect(() => {
+		document.addEventListener("mousedown", handleUserMenu);
+		document.addEventListener("touchstart", handleUserMenu);
+	}, []);
 
 	return (
 		<header className="relative w-full z-10">
@@ -64,15 +82,43 @@ export default function Header() {
 									<path className="fill-primary stroke-none" d="M12 6.9640836c.556578 0 1.386924 2.8618972 1.780455 3.2554624.393565.39353 3.255462 1.223876 3.255462 1.780453 0 .556578-2.861897 1.386924-3.255462 1.780455-.393531.393565-1.223877 3.255462-1.780455 3.255462-.556577 0-1.386923-2.861897-1.780453-3.255462-.393566-.393531-3.2554635-1.223877-3.2554635-1.780455 0-.556577 2.8618975-1.386923 3.2554635-1.780453.39353-.3935652 1.223876-3.2554624 1.780453-3.2554624Z" />
 								</svg>
 							</span>
-							<div className="w-16">
-								<Avatar className="size-14">
-									<div className="bg-secondary size-full grid place-content-center text-background font-bold text-2xl overflow-hidden">
-										<p>U</p>
-									</div>
-								</Avatar>
+							<div className="relative">
+								<button className="hover:scale-110 transition-all" ref={userMenuToggleRef}>
+									<Avatar className="size-14">
+										<div className="bg-secondary size-full grid place-content-center text-background font-bold text-2xl overflow-hidden">
+											<p>U</p>
+										</div>
+									</Avatar>
+								</button>
+								<AnimatePresence mode="wait">
+									{userMenuOpen && (
+										<motion.div initial={{y: "-10%", opacity: 0}} animate={{y: "0%", opacity: 1, transition: {duration: 0.3, ease: [0.33, 1, 0.68, 1]}}} exit={{y: "-10%", opacity: 0, transition: {duration: 0.3, ease: [0.33, 1, 0.68, 1]}}} className="absolute min-w-60 border border-slate-300 bg-white shadow-lg rounded-md z-30 top-20 right-0 flex flex-col p-4 overflow-y-auto">
+											<div ref={userMenuRef}>
+												<ul className="flex flex-col gap-2 font-medium text-lg">
+													<li>
+														<Link className="w-full block text-start rounded-md hover:bg-slate-100 transition-all px-4 py-2 cursor-pointer" href="/settings">
+															Settings
+														</Link>
+													</li>
+													<li>
+														<button
+															className="w-full block text-start rounded-md hover:bg-slate-100 transition-all px-4 py-2 cursor-pointer"
+															onClick={() => {
+																logout();
+																router.push("/");
+															}}>
+															Log out
+														</button>
+													</li>
+												</ul>
+											</div>
+										</motion.div>
+									)}
+								</AnimatePresence>
 							</div>
 						</span>
 					</div>
+
 					<div className="xl:hidden">
 						<button onClick={() => setMenuOpen(!menuOpen)}>
 							<svg className="size-10" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" viewBox="0 0 24 24">
@@ -135,6 +181,16 @@ export default function Header() {
 											<Link className="hover:underline underline-offset-8 decoration-2" href="/achievements">
 												Achievements
 											</Link>
+										</li>
+										<li>
+											<button
+												className="hover:underline underline-offset-8 decoration-2"
+												onClick={() => {
+													logout();
+													router.push("/");
+												}}>
+												Log out
+											</button>
 										</li>
 									</ul>
 								</nav>
