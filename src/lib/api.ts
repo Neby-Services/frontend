@@ -31,3 +31,7 @@ export const fetchRegister = async (body: RegisterSentData) => {
 export const fetchServices = async () => {
 	return await fetchData(`${process.env["NEXT_PUBLIC_API_PATH"]}/services`);
 };
+
+export const fetchSelfUserData = async () => {
+	return await fetchData(`${process.env["NEXT_PUBLIC_API_PATH"]}/auth/self`);
+};

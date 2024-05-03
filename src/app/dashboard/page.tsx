@@ -2,7 +2,6 @@
 
 import Header from "@/components/header";
 import ServiceCard from "@/components/service-card";
-import {logout} from "@/lib/actions";
 import {fetchServices} from "@/lib/api";
 import {useRouter} from "next/navigation";
 import {useEffect, useState} from "react";
@@ -20,15 +19,9 @@ export default function Dashboard() {
 				const data = await fetchServices();
 				console.log(data);
 				if (!data.error) setServices(data["services"]);
-				else {
-					logout();
-					router.push("/");
-				}
 				setLoading(false);
 			} catch (error) {
 				console.log(error);
-				logout();
-				router.push("/");
 				setLoading(false);
 			}
 		};

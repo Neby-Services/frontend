@@ -3,6 +3,7 @@
 import {Avatar} from "@/components/ui/avatar";
 import {Button} from "@/components/ui/button";
 import {logout} from "@/lib/actions";
+import {fetchSelfUserData} from "@/lib/api";
 import {AnimatePresence, motion} from "framer-motion";
 import Link from "next/link";
 import {useRouter} from "next/navigation";
@@ -11,6 +12,9 @@ import {useEffect, useRef, useState} from "react";
 export default function Header() {
 	const [menuOpen, setMenuOpen] = useState(false);
 	const [userMenuOpen, setUserMenuOpen] = useState(false);
+	const [userData, setUserData] = useState<UserReceivedData>();
+
+	const [loading, setLoading] = useState(false);
 
 	const userMenuRef = useRef<HTMLDivElement>(null);
 	const userMenuToggleRef = useRef<HTMLButtonElement>(null);
@@ -25,6 +29,27 @@ export default function Header() {
 	useEffect(() => {
 		document.addEventListener("mousedown", handleUserMenu);
 		document.addEventListener("touchstart", handleUserMenu);
+
+		const fetchData = async () => {
+			try {
+				const data = await fetchSelfUserData();
+				console.log(data);
+				if (!data.error) setUserData(data["user"]);
+				else {
+					logout();
+					router.push("/");
+				}
+				setLoading(false);
+			} catch (error) {
+				console.log(error);
+				logout();
+				router.push("/");
+				setLoading(false);
+			}
+		};
+
+		setLoading(true);
+		fetchData();
 	}, []);
 
 	return (
@@ -76,7 +101,7 @@ export default function Header() {
 								<input className="bg-slate-200 pl-12 px-4 py-3 font-medium rounded-full w-48" type="text" placeholder="Search..." />
 							</form>
 							<span className="flex justify-center items-center gap-2">
-								<p className="font-semibold text-lg truncate max-w-20">1320</p>
+								<p className="font-semibold text-lg truncate max-w-20">{!loading && userData && userData["balance"]}</p>
 								<svg className="size-7" viewBox="0 0 24 24">
 									<circle className="fill-secondary stroke-primary" strokeWidth="2" cx="12" cy="12" r="9.8282385" />
 									<path className="fill-primary stroke-none" d="M12 6.9640836c.556578 0 1.386924 2.8618972 1.780455 3.2554624.393565.39353 3.255462 1.223876 3.255462 1.780453 0 .556578-2.861897 1.386924-3.255462 1.780455-.393531.393565-1.223877 3.255462-1.780455 3.255462-.556577 0-1.386923-2.861897-1.780453-3.255462-.393566-.393531-3.2554635-1.223877-3.2554635-1.780455 0-.556577 2.8618975-1.386923 3.2554635-1.780453.39353-.3935652 1.223876-3.2554624 1.780453-3.2554624Z" />
@@ -86,7 +111,7 @@ export default function Header() {
 								<button className="hover:scale-110 transition-all" ref={userMenuToggleRef}>
 									<Avatar className="size-14">
 										<div className="bg-secondary size-full grid place-content-center text-background font-bold text-2xl overflow-hidden">
-											<p>U</p>
+											<p>{!loading && userData && userData["username"].slice(0, 1).toUpperCase()}</p>
 										</div>
 									</Avatar>
 								</button>
@@ -141,11 +166,11 @@ export default function Header() {
 								<div className="w-full flex justify-between items-center">
 									<Avatar className="size-14">
 										<div className="bg-secondary size-full grid place-content-center text-background font-bold text-2xl overflow-hidden">
-											<p>U</p>
+											<p>{!loading && userData && userData["username"].slice(0, 1).toUpperCase()}</p>
 										</div>
 									</Avatar>
 									<span className="flex justify-center items-center gap-2">
-										<p className="font-semibold text-lg truncate max-w-20">1320</p>
+										<p className="font-semibold text-lg truncate max-w-20">{!loading && userData && userData["balance"]}</p>
 										<svg className="size-7" viewBox="0 0 24 24">
 											<circle className="fill-secondary stroke-primary" strokeWidth="2" cx="12" cy="12" r="9.8282385" />
 											<path className="fill-primary stroke-none" d="M12 6.9640836c.556578 0 1.386924 2.8618972 1.780455 3.2554624.393565.39353 3.255462 1.223876 3.255462 1.780453 0 .556578-2.861897 1.386924-3.255462 1.780455-.393531.393565-1.223877 3.255462-1.780455 3.255462-.556577 0-1.386923-2.861897-1.780453-3.255462-.393566-.393531-3.2554635-1.223877-3.2554635-1.780455 0-.556577 2.8618975-1.386923 3.2554635-1.780453.39353-.3935652 1.223876-3.2554624 1.780453-3.2554624Z" />
@@ -180,6 +205,11 @@ export default function Header() {
 										<li>
 											<Link className="hover:underline underline-offset-8 decoration-2" href="/achievements">
 												Achievements
+											</Link>
+										</li>
+										<li>
+											<Link className="hover:underline underline-offset-8 decoration-2" href="/settings">
+												Settings
 											</Link>
 										</li>
 										<li>
