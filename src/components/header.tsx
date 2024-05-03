@@ -9,9 +9,9 @@ import Link from "next/link";
 import {useRouter} from "next/navigation";
 import {useEffect, useRef, useState} from "react";
 
-type HeaderProps = {
+interface HeaderProps {
 	redirect?: boolean;
-};
+}
 
 export default function Header({redirect = true}: HeaderProps) {
 	const [menuOpen, setMenuOpen] = useState(false);
