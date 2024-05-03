@@ -6,7 +6,7 @@ import Link from "next/link";
 export default function NotFound() {
 	return (
 		<main className="min-h-svh flex flex-col">
-			<Header />
+			<Header redirect={false} />
 			<section className="max-w-[1800px] min-[1800px]:mx-auto box-content py-6 px-4 md:px-16 flex flex-col gap-6 justify-center items-center flex-1">
 				<Image className="max-w-[600px] w-full" priority src={illustration} alt="404 Image" />
 				<Link className="flex flex-row justify-center items-center gap-1 font-semibold text-base hover:underline underline-offset-8 decoration-2" href="/dashboard">
