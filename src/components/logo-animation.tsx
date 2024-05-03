@@ -1,26 +1,54 @@
 "use client";
 
+import {cn} from "@/lib/utils";
 import {useGSAP} from "@gsap/react";
 import gsap from "gsap";
 import {useRef} from "react";
 
 gsap.registerPlugin(useGSAP);
 
-export default function LogoAnimation() {
+interface LogoAnimationProps {
+	className?: string;
+	variant?: "elastic" | "displacement";
+}
+
+export default function LogoAnimation({className, variant = "elastic"}: LogoAnimationProps) {
 	const container = useRef(null);
+
+	const elasticAnimation = () => {
+		gsap.to("svg", {
+			duration: 2,
+			y: gsap.utils.wrap(["-70%", "-58%", "-46%", "-34%", "-22%"]),
+			opacity: gsap.utils.wrap([1, 0.5, 0.3, 0.2, 0.1]),
+			repeat: -1,
+			repeatDelay: 3,
+			yoyo: true,
+			yoyoEase: "elastic.out",
+			ease: "elastic.out"
+		});
+	};
+
+	const displacementAnimation = () => {
+		gsap.fromTo(
+			"svg",
+			{
+				y: gsap.utils.wrap(["-70%", "-70%", "-58%", "-46%", "-34%"]),
+				opacity: gsap.utils.wrap([1, 0.8, 0.6, 0.4, 0.2])
+			},
+			{
+				duration: 1,
+				y: gsap.utils.wrap(["-70%", "-58%", "-46%", "-34%", "-22%"]),
+				opacity: gsap.utils.wrap([1, 0.6, 0.4, 0.2, 0]),
+				repeat: -1,
+				ease: "none"
+			}
+		);
+	};
 
 	useGSAP(
 		() => {
-			gsap.to("svg", {
-				duration: 2,
-				y: gsap.utils.wrap(["-70%", "-58%", "-46%", "-34%", "-22%"]),
-				opacity: gsap.utils.wrap([1, 0.5, 0.3, 0.2, 0.1]),
-				repeat: -1,
-				repeatDelay: 3,
-				yoyo: true,
-				yoyoEase: "elastic.out",
-				ease: "elastic.out"
-			});
+			if (variant == "elastic") elasticAnimation();
+			else if (variant == "displacement") displacementAnimation();
 		},
 		{scope: container}
 	);
@@ -35,7 +63,7 @@ export default function LogoAnimation() {
 	}
 
 	return (
-		<div ref={container} className="relative w-full h-full">
+		<div ref={container} className={cn("relative w-full h-full", className)}>
 			{logos}
 		</div>
 	);

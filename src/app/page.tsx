@@ -35,7 +35,8 @@ export default function Home() {
 					sm:w-[200px] sm:max-w-[200px] sm:h-[250px] sm:max-h-[250px]
 					md:w-[300px] md:max-w-[300px] md:h-[400px] md:max-h-[400px]
 				`}>
-					<LogoAnimation />
+					<LogoAnimation className="max-md:hidden" variant="displacement" />
+					<LogoAnimation className="md:hidden" variant="elastic" />
 				</div>
 			</section>
 		</main>
