@@ -9,7 +9,7 @@ import {useEffect, useState} from "react";
 export default function Dashboard() {
 	const [services, setServices] = useState<ServiceReceivedData[]>([]);
 
-	const [loading, setLoading] = useState(false);
+	const [loading, setLoading] = useState(true);
 
 	const router = useRouter();
 
