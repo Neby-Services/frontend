@@ -4,8 +4,8 @@ import Link from "next/link";
 
 export default function Home() {
 	return (
-		<main className="min-h-svh grid place-content-center">
-			<section className="max-w-[1400px] w-screen px-10 sm:px-20 lg:px-40 mx-auto h-svh flex flex-col-reverse md:flex-row justify-center md:justify-between items-center md:gap-12">
+		<main className="min-h-svh flex flex-col items-center">
+			<section className="max-w-[1500px] w-full px-10 sm:px-20 lg:px-40 h-svh flex flex-col-reverse md:flex-row justify-center md:justify-between items-center md:gap-12">
 				<div>
 					<h1 className="text-5xl font-bold mb-6 max-md:text-center">NEBY</h1>
 					<h2 className="text-2xl font-medium mb-10">
