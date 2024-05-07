@@ -18,7 +18,7 @@ export default function Register() {
 	const [confirmPassword, setConfirmPassword] = useState("");
 	const [passwordVisible, setPasswordVisible] = useState(false);
 	const [confirmPasswordVisible, setConfirmPasswordVisible] = useState(false);
-	const [userType, setUserType] = useState("neighbor");
+	const [userType, setUserType] = useState<"neighbor" | "admin">("neighbor");
 	const [communityCode, setCommunityCode] = useState("");
 	const [communityName, setCommunityName] = useState("");
 
@@ -75,7 +75,7 @@ export default function Register() {
 							Go Back
 						</Link>
 						<h1 className="text-3xl sm:text-4xl font-bold text-center mb-12">Create Account</h1>
-						<form onSubmit={e => e.preventDefault()} className="flex flex-col flex-1">
+						<form onSubmit={handleSubmit} className="flex flex-col flex-1">
 							<label className="flex flex-col text-sm sm:text-lg font-semibold gap-2 mb-6">
 								Email
 								<input onChange={e => setEmail(e.target.value)} value={email} className="border-2 rounded-lg text-base p-1.5" type="email" />
@@ -148,7 +148,7 @@ export default function Register() {
 									<input onChange={e => setCommunityName(e.target.value)} value={communityName} className="border-2 rounded-lg text-base p-1.5" type="text" />
 								</label>
 							)}
-							<Button disabled={loading} type="submit" variant="secondary" onClick={handleSubmit} className="w-fit place-self-center mt-10 px-7 py-7 font-semibold text-base sm:text-lg shadow-lg flex flex-row gap-4">
+							<Button disabled={loading} type="submit" variant="secondary" onClick={handleSubmit} className="w-fit place-self-center mt-10 px-5 py-7 font-semibold text-base sm:text-lg shadow-lg flex flex-row gap-2">
 								{loading ? (
 									<>
 										<Loader2 className="size-6 animate-spin" />
