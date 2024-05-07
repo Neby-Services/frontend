@@ -1,8 +1,8 @@
 "use client";
 
+import OptionSelect from "@/components/option-select";
 import {Button} from "@/components/ui/button";
 import {ScrollArea} from "@/components/ui/scroll-area";
-import UserTypeSelect from "@/components/user-type-select";
 import {fetchRegister} from "@/lib/api";
 import {formToastError, toSentenceCase} from "@/lib/utils";
 import styles from "@/ui/register.module.css";
@@ -134,7 +134,7 @@ export default function Register() {
 							</label>
 							<div className="flex flex-col text-sm sm:text-lg font-semibold gap-2 mb-6">
 								<label>User Type</label>
-								<UserTypeSelect value={userType} setValue={setUserType} />
+								<OptionSelect option1="Neighbor" option2="Admin" optionValue1="neighbor" optionValue2="admin" value={userType} setValue={setUserType} />
 							</div>
 							{userType === "neighbor" && (
 								<label className="flex flex-col text-sm sm:text-lg font-semibold gap-2 mb-6">
