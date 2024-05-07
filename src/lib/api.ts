@@ -28,6 +28,14 @@ export const fetchRegister = async (body: RegisterSentData) => {
 	});
 };
 
+export const fetchCreateService = async (body: ServiceSentData) => {
+	return await fetchData(`${process.env["NEXT_PUBLIC_API_PATH"]}/services`, {
+		method: "POST",
+		body: JSON.stringify(body),
+		headers: {"Content-Type": "application/json"}
+	});
+};
+
 export const fetchServices = async () => {
 	return await fetchData(`${process.env["NEXT_PUBLIC_API_PATH"]}/services`);
 };
