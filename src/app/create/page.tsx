@@ -1,5 +1,6 @@
 "use client";
 
+import OptionSelect from "@/components/option-select";
 import {Button} from "@/components/ui/button";
 import {ScrollArea} from "@/components/ui/scroll-area";
 import {fetchCreateService} from "@/lib/api";
@@ -75,6 +76,7 @@ export default function Register() {
 							</label>
 							<div className="flex flex-col text-sm sm:text-lg font-semibold gap-2 mb-6">
 								<label>Service Type</label>
+								<OptionSelect option1="Requested" option2="Offered" optionValue1="requested" optionValue2="offered" value={serviceType} setValue={setServiceType} />
 							</div>
 							<Button disabled={loading} type="submit" variant="secondary" onClick={handleSubmit} className="w-fit place-self-center mt-10 px-5 py-7 font-semibold text-base sm:text-lg shadow-lg flex flex-row gap-2">
 								{loading ? (
