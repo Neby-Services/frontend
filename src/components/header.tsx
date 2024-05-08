@@ -85,15 +85,17 @@ export default function Header({redirect = true}: HeaderProps) {
 							</span>
 						</div>
 						<div className="max-xl:hidden flex justify-center">
-							<Button variant="secondary" size="lg" className="px-4 font-semibold text-base shadow-md flex flex-row gap-4">
-								<svg className="size-6" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" viewBox="0 0 24 24">
-									<path stroke="none" d="M0 0h24v24H0z" fill="none" />
-									<path d="M9 12h6" />
-									<path d="M12 9v6" />
-									<path d="M3 5a2 2 0 0 1 2 -2h14a2 2 0 0 1 2 2v14a2 2 0 0 1 -2 2h-14a2 2 0 0 1 -2 -2v-14z" />
-								</svg>
-								<p>New Post</p>
-							</Button>
+							<Link href="/create">
+								<Button variant="secondary" size="lg" className="px-4 font-semibold text-base shadow-md flex flex-row gap-4">
+									<svg className="size-6" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" viewBox="0 0 24 24">
+										<path stroke="none" d="M0 0h24v24H0z" fill="none" />
+										<path d="M9 12h6" />
+										<path d="M12 9v6" />
+										<path d="M3 5a2 2 0 0 1 2 -2h14a2 2 0 0 1 2 2v14a2 2 0 0 1 -2 2h-14a2 2 0 0 1 -2 -2v-14z" />
+									</svg>
+									<p>New Post</p>
+								</Button>
+							</Link>
 						</div>
 						<div className="max-xl:hidden flex-1 flex justify-end">
 							<span className="flex justify-center items-center gap-8">
@@ -183,15 +185,17 @@ export default function Header({redirect = true}: HeaderProps) {
 										</span>
 									</div>
 									<hr className="w-4/5 mx-auto my-8" />
-									<Button variant="secondary" size="lg" className="px-4 py-3 mb-6 font-semibold text-base shadow-md flex flex-row gap-4 rounded-full">
-										<svg className="size-6" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" viewBox="0 0 24 24">
-											<path stroke="none" d="M0 0h24v24H0z" fill="none" />
-											<path d="M9 12h6" />
-											<path d="M12 9v6" />
-											<path d="M3 5a2 2 0 0 1 2 -2h14a2 2 0 0 1 2 2v14a2 2 0 0 1 -2 2h-14a2 2 0 0 1 -2 -2v-14z" />
-										</svg>
-										<p>New Post</p>
-									</Button>
+									<Link className="w-full" href="/create">
+										<Button variant="secondary" size="lg" className="px-4 py-3 mb-6 font-semibold text-base shadow-md flex flex-row gap-4 rounded-full w-full">
+											<svg className="size-6" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" viewBox="0 0 24 24">
+												<path stroke="none" d="M0 0h24v24H0z" fill="none" />
+												<path d="M9 12h6" />
+												<path d="M12 9v6" />
+												<path d="M3 5a2 2 0 0 1 2 -2h14a2 2 0 0 1 2 2v14a2 2 0 0 1 -2 2h-14a2 2 0 0 1 -2 -2v-14z" />
+											</svg>
+											<p>New Post</p>
+										</Button>
+									</Link>
 									<form className="relative mb-6">
 										<svg className="absolute top-1/2 -translate-y-1/2 left-4 size-6" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" viewBox="0 0 24 24">
 											<path stroke="none" d="M0 0h24v24H0z" fill="none" />

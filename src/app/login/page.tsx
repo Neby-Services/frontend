@@ -58,7 +58,7 @@ export default function Login() {
 							Go Back
 						</Link>
 						<h1 className="text-3xl sm:text-4xl font-bold text-center mb-12">Login</h1>
-						<form onSubmit={e => e.preventDefault()} className="flex flex-col flex-1">
+						<form onSubmit={handleSubmit} className="flex flex-col flex-1">
 							<label className="flex flex-col text-sm sm:text-lg font-semibold gap-2 mb-6">
 								Email
 								<input onChange={e => setEmail(e.target.value)} value={email} className="border-2 rounded-lg text-base p-1.5" type="email" />
@@ -87,7 +87,7 @@ export default function Login() {
 									<input onChange={e => setPassword(e.target.value)} value={password} className="border-2 rounded-lg text-base p-1.5 w-full pr-12" type={passwordVisible ? "text" : "password"} />
 								</div>
 							</label>
-							<Button disabled={loading} type="submit" variant="secondary" onClick={handleSubmit} className="w-fit place-self-center mt-10 px-7 py-7 font-semibold text-base sm:text-lg shadow-lg flex flex-row gap-4">
+							<Button disabled={loading} type="submit" variant="secondary" onClick={handleSubmit} className="w-fit place-self-center mt-10 px-5 py-7 font-semibold text-base sm:text-lg shadow-lg flex flex-row gap-2">
 								{loading ? (
 									<>
 										<Loader2 className="size-6 animate-spin" />

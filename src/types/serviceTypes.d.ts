@@ -15,3 +15,11 @@ interface ServiceReceivedData {
 	created_at: string;
 	updated_at: string;
 }
+
+interface ServiceSentData {
+	title: string;
+	description: string;
+	price: number;
+	type: "requested" | "offered";
+	image_url?: string;
+}
