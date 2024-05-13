@@ -4,7 +4,10 @@ const fetchData = async (input: RequestInfo, init?: RequestInit) => {
 	try {
 		data = await response.json();
 	} catch (e) {
-		data = {error: "Something went wrong"};
+		data = {error: "something went wrong"};
+	}
+	if (!response.ok) {
+		data["status"] = response.status;
 	}
 	return data;
 };
@@ -25,6 +28,18 @@ export const fetchRegister = async (body: RegisterSentData) => {
 	});
 };
 
+export const fetchCreateService = async (body: ServiceSentData) => {
+	return await fetchData(`${process.env["NEXT_PUBLIC_API_PATH"]}/services`, {
+		method: "POST",
+		body: JSON.stringify(body),
+		headers: {"Content-Type": "application/json"}
+	});
+};
+
 export const fetchServices = async () => {
 	return await fetchData(`${process.env["NEXT_PUBLIC_API_PATH"]}/services`);
+};
+
+export const fetchSelfUserData = async () => {
+	return await fetchData(`${process.env["NEXT_PUBLIC_API_PATH"]}/auth/self`);
 };
