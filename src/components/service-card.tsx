@@ -6,18 +6,20 @@ import {Button} from "@/components/ui/button";
 import {Card, CardContent, CardFooter, CardHeader, CardTitle} from "@/components/ui/card";
 import {cn} from "@/lib/utils";
 import styles from "@/ui/service-card.module.css";
+import Link from "next/link";
 
 interface ServiceCardProps {
 	className?: string;
-	img?: string;
-	username: string;
-	type: string;
+	id: string;
 	title: string;
 	description: string;
+	username: string;
+	type: string;
 	price: number;
+	img?: string;
 }
 
-export default function ServiceCard({className, img, username, type, title, description, price}: ServiceCardProps) {
+export default function ServiceCard({className, id, title, description, username, type, price, img}: ServiceCardProps) {
 	return (
 		<Card className={cn("border-none shadow-md flex overflow-hidden h-min md:h-80 rounded-3xl", className)}>
 			{img && (
@@ -45,15 +47,17 @@ export default function ServiceCard({className, img, username, type, title, desc
 				</CardContent>
 				<CardFooter className="flex-1 flex items-end">
 					<div className="flex w-full justify-between items-center gap-4">
-						<Button variant="secondary" size="lg" className="px-4 font-semibold text-base sm:text-lg shadow-md flex flex-row gap-2">
-							See More
-							<svg className="size-6" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" viewBox="0 0 24 24">
-								<path stroke="none" d="M0 0h24v24H0z" fill="none" />
-								<path d="M5 12l14 0" />
-								<path d="M13 18l6 -6" />
-								<path d="M13 6l6 6" />
-							</svg>
-						</Button>
+						<Link href={`/service/${id}`}>
+							<Button variant="secondary" size="lg" className="px-4 font-semibold text-base sm:text-lg shadow-md flex flex-row gap-2">
+								See More
+								<svg className="size-6" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" viewBox="0 0 24 24">
+									<path stroke="none" d="M0 0h24v24H0z" fill="none" />
+									<path d="M5 12l14 0" />
+									<path d="M13 18l6 -6" />
+									<path d="M13 6l6 6" />
+								</svg>
+							</Button>
+						</Link>
 						<span className="flex justify-center items-center gap-2">
 							<p className="font-semibold text-sm md:text-lg truncate max-w-28">{price == 0 ? "Exchange" : price}</p>
 							{price == 0 ? (

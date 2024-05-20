@@ -4,8 +4,22 @@ interface ServiceReceivedData {
 	creator: {
 		id: string;
 		username: string;
+		type: string;
+		email: string;
+		balance: number;
+		created_at: string;
+		updated_at: string;
 	};
 	buyer_id?: string;
+	buyer?: {
+		id: string;
+		username: string;
+		type: string;
+		email: string;
+		balance: number;
+		created_at: string;
+		updated_at: string;
+	};
 	title: string;
 	description: string;
 	price: number;
