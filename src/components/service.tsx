@@ -3,12 +3,9 @@
 import {Avatar} from "@/components/ui/avatar";
 import {Badge} from "@/components/ui/badge";
 import {Button} from "@/components/ui/button";
-import {Card, CardContent, CardFooter, CardHeader, CardTitle} from "@/components/ui/card";
-import {cn} from "@/lib/utils";
-import styles from "@/ui/service-card.module.css";
-import Link from "next/link";
+import {CardContent, CardFooter, CardHeader, CardTitle} from "@/components/ui/card";
 
-interface ServiceCardProps {
+interface ServiceProps {
 	className?: string;
 	img?: string;
 	username: string;
@@ -19,15 +16,10 @@ interface ServiceCardProps {
 	id: string;
 }
 
-export default function ServiceCard({className, img, username, type, title, description, price, id}: ServiceCardProps) {
+export default function ServiceCard({className, img, username, type, title, description, price, id}: ServiceProps) {
 	return (
-		<Card className={cn("border-none shadow-md flex overflow-hidden h-min md:h-80 rounded-3xl", className)}>
-			{img && (
-				<div className="w-80 hidden md:flex justify-center items-center overflow-hidden">
-					<img className="size-full object-cover" src={img} alt="chore" />
-				</div>
-			)}
-			<div className="w-full min-w-[200px] flex flex-col">
+		<div className="border-none flex overflow-hidden w-[100%] h-[100%] rounded-3xl">
+			<div className="w-full flex flex-col">
 				<CardHeader>
 					<CardTitle className="flex justify-between items-center gap-4 md:gap-6">
 						<Avatar className="size-10 md:size-14 -z-0">
@@ -35,31 +27,36 @@ export default function ServiceCard({className, img, username, type, title, desc
 								<p className="text-lg md:text-xl">{username ? username[0].toUpperCase() : "-"}</p>
 							</div>
 						</Avatar>
-						<p className="flex-1 truncate text-base md:text-xl max-[300px]:hidden">{username}</p>
+						<p className="flex-1 text-base md:text-xl max-[300px]:hidden">{username}</p>
 						<Badge className="text-sm md:text-base border-2" variant="outline">
 							{type}
 						</Badge>
 					</CardTitle>
 				</CardHeader>
-				<CardContent>
-					<h1 className="font-bold text-xl md:text-2xl mb-2 truncate">{title}</h1>
-					<p className={`${styles.description} text-base md:text-lg`}>{description}</p>
+				<CardContent className="flex flex-col md:flex-row">
+					<div className="flex-1">
+						<h1 className="font-bold text-xl md:text-2xl mb-2">{title}</h1>
+						<p className="text-base md:text-lg text-justify overflow-visible pt-4">{description}</p>
+					</div>
+					{img && (
+						<div className="flex-1 flex justify-center items-center overflow-hidden pt-8 pl-8">
+							<img className="max-w-full h-auto object-cover" src={img} alt="chore" />
+						</div>
+					)}
 				</CardContent>
 				<CardFooter className="flex-1 flex items-end">
 					<div className="flex w-full justify-between items-center gap-4">
-						<Link href={`/service/${id}`}>
-							<Button variant="secondary" size="lg" className="px-4 font-semibold text-base sm:text-lg shadow-md flex flex-row gap-2">
-								See More
-								<svg className="size-6" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" viewBox="0 0 24 24">
-									<path stroke="none" d="M0 0h24v24H0z" fill="none" />
-									<path d="M5 12l14 0" />
-									<path d="M13 18l6 -6" />
-									<path d="M13 6l6 6" />
-								</svg>
-							</Button>
-						</Link>
+						<Button variant="secondary" size="lg" className="px-4 font-semibold text-base sm:text-lg shadow-md flex flex-row gap-2">
+							Accept
+							<svg className="size-6" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" viewBox="0 0 24 24">
+								<path stroke="none" d="M0 0h24v24H0z" fill="none" />
+								<path d="M5 12l14 0" />
+								<path d="M13 18l6 -6" />
+								<path d="M13 6l6 6" />
+							</svg>
+						</Button>
 						<span className="flex justify-center items-center gap-2">
-							<p className="font-semibold text-sm md:text-lg truncate max-w-28">{price == 0 ? "Exchange" : price}</p>
+							<p className="font-semibold text-sm md:text-lg max-w-28">{price == 0 ? "Exchange" : price}</p>
 							{price == 0 ? (
 								<svg className="size-7" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" viewBox="0 0 24 24">
 									<path stroke="none" d="M0 0h24v24H0z" fill="none" />
@@ -76,6 +73,6 @@ export default function ServiceCard({className, img, username, type, title, desc
 					</div>
 				</CardFooter>
 			</div>
-		</Card>
+		</div>
 	);
 }
