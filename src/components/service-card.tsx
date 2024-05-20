@@ -10,16 +10,16 @@ import Link from "next/link";
 
 interface ServiceCardProps {
 	className?: string;
-	img?: string;
-	username: string;
-	type: string;
+	id: string;
 	title: string;
 	description: string;
+	username: string;
+	type: string;
 	price: number;
-	id: string;
+	img?: string;
 }
 
-export default function ServiceCard({className, img, username, type, title, description, price, id}: ServiceCardProps) {
+export default function ServiceCard({className, id, title, description, username, type, price, img}: ServiceCardProps) {
 	return (
 		<Card className={cn("border-none shadow-md flex overflow-hidden h-min md:h-80 rounded-3xl", className)}>
 			{img && (
