@@ -15,7 +15,7 @@ export default function Service({params}: {params: {id: string}}) {
 		const fetchData = async () => {
 			try {
 				const data = await fetchServiceById(params.id);
-				setService(data);
+				setService(data["service"]);
 				console.log(data);
 				setLoading(false);
 			} catch (error) {
