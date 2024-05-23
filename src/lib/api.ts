@@ -62,3 +62,6 @@ export const fetchCreateNotification = async (queryStrings: NotificationCreateQu
 export const fetchNotificationServiceSelf = async (service_id: string) => {
 	return await fetchData(`${process.env["NEXT_PUBLIC_API_PATH"]}/services/${service_id}/notifications`);
 }
+export const fetchArchievements = async () => {
+	return await fetchData(`${process.env["NEXT_PUBLIC_API_PATH"]}/user_achievements`);
+};
