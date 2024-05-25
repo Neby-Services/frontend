@@ -27,7 +27,7 @@ export default function ArchievementCard({titttle, descr, price, stat}: ServiceC
 					<br />
 					<div className="relative flex-none mb-[20px] h-[26px] w-full flex justify-between items-center box-border mt-4">
 						<div className="flex items-center gap-4">
-							<Button variant="secondary" size="sm" className="px-4 font-semibold text-[8px] sm:text-lg shadow-md" style={stat === "Claimed" ? {backgroundColor: "#4af77e"} : {}}>
+							<Button variant="secondary" size="sm" className="px-4 font-semibold text-[8px] sm:text-lg shadow-md" style={stat === "Claimed" || stat === "In progress" ? {backgroundColor: "#4af77e80"} : {}}>
 								{stat}
 							</Button>
 
