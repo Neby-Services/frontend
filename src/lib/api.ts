@@ -40,6 +40,10 @@ export const fetchServices = async () => {
 	return await fetchData(`${process.env["NEXT_PUBLIC_API_PATH"]}/services`);
 };
 
+export const fetchServicesSelf = async () => {
+	return await fetchData(`${process.env["NEXT_PUBLIC_API_PATH"]}/services/self`);
+};
+
 export const fetchSelfUserData = async () => {
 	return await fetchData(`${process.env["NEXT_PUBLIC_API_PATH"]}/auth/self`);
 };
