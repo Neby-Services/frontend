@@ -28,6 +28,22 @@ export const fetchRegister = async (body: RegisterSentData) => {
 	});
 };
 
+export const fetchSettings = async (body: SettingsSentData) => {
+	return await fetchData(`${process.env["NEXT_PUBLIC_API_PATH"]}/users/self`, {
+		method: "PUT",
+		body: JSON.stringify(body),
+		headers: {"Content-Type": "application/json"}
+	});
+};
+
+export const fetchDeleteSelf = async (userId: string, isAdmin: boolean) => {
+	return await fetchData(`${process.env["NEXT_PUBLIC_API_PATH"]}/users/self`, {
+		method: "DELETE",
+		body: JSON.stringify({id: userId, isAdmin}),
+		headers: {"Content-Type": "application/json"}
+	});
+};
+
 export const fetchCreateService = async (body: ServiceSentData) => {
 	return await fetchData(`${process.env["NEXT_PUBLIC_API_PATH"]}/services`, {
 		method: "POST",

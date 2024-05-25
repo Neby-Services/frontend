@@ -47,7 +47,7 @@ export default function ServiceCard({className, img, username, type, title, desc
 				<CardFooter className="flex-1 flex items-end">
 					<div className="flex w-full justify-between items-center gap-4">
 						<Button variant="secondary" size="lg" className="px-4 font-semibold text-base sm:text-lg shadow-md flex flex-row gap-2">
-							Accept
+							Request
 							<svg className="size-6" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" viewBox="0 0 24 24">
 								<path stroke="none" d="M0 0h24v24H0z" fill="none" />
 								<path d="M5 12l14 0" />
