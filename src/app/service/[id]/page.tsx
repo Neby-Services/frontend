@@ -1,6 +1,7 @@
 "use client";
+
 import Header from "@/components/header";
-import ServiceCard from "@/components/service";
+import ServiceContent from "@/components/service-content";
 import {logout} from "@/lib/actions";
 import {fetchServiceById} from "@/lib/api";
 import {useRouter} from "next/navigation";
@@ -30,10 +31,14 @@ export default function Service({params}: {params: {id: string}}) {
 		fetchData();
 	}, [params.id]);
 
-	return (
-		<main>
-			<Header />
-			<section className="max-w-[1800px] min-[1800px]:mx-auto h-[100%] box-content py-6 px-4 md:px-16 gap-6 xl:grid-cols-2">{service ? <ServiceCard key={service.id} id={service.id} title={service.title} description={service.description} username={service.creator.username} type={service.type} price={service.price} img={service.image_url} /> : ""}</section>
-		</main>
-	);
+	if (!loading && service) {
+		return (
+			<main>
+				<Header redirect={false} />
+				<section className="max-w-[1200px] min-[1200px]:mx-auto min-h-full box-content py-6 px-4 md:px-16 gap-6">
+					<ServiceContent id={service.id} title={service.title} description={service.description} username={service.creator.username} type={service.type} price={service.price} img={service.image_url} />
+				</section>
+			</main>
+		);
+	}
 }
