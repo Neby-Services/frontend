@@ -189,13 +189,6 @@ export default function Header({ redirect = true }: HeaderProps) {
 						</div>
 
 						<div className="xl:hidden">
-							<button className="flex items-center" onClick={() => {
-								router.push('/notifications')
-							}}>
-								<svg className="size-7" xmlns="http://www.w3.org/2000/svg" width="1em" height="1em" viewBox="0 0 20 20"><path fill="currentColor" d="M4 8a6 6 0 0 1 4.03-5.67a2 2 0 1 1 3.95 0A6 6 0 0 1 16 8v6l3 2v1H1v-1l3-2zm8 10a2 2 0 1 1-4 0z" /></svg>
-							</button>
-						</div>
-						<div className="xl:hidden">
 							<button onClick={() => setMenuOpen(!menuOpen)}>
 								<svg className="size-10" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" viewBox="0 0 24 24">
 									<path stroke="none" d="M0 0h24v24H0z" fill="none" />
