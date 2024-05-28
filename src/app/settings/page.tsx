@@ -1,15 +1,15 @@
 "use client";
 
 import Header from "@/components/header";
-import {AlertDialog, AlertDialogAction, AlertDialogCancel, AlertDialogContent, AlertDialogDescription, AlertDialogFooter, AlertDialogHeader, AlertDialogTitle, AlertDialogTrigger} from "@/components/ui/alert-dialog";
-import {Avatar} from "@/components/ui/avatar";
-import {Button} from "@/components/ui/button";
-import {logout} from "@/lib/actions";
-import {fetchDeleteSelf, fetchSelfUserData, fetchSettings} from "@/lib/api";
-import {formToastError, toSentenceCase} from "@/lib/utils";
-import {Loader2} from "lucide-react";
-import {useRouter} from "next/navigation";
-import {FormEvent, useEffect, useState} from "react";
+import { AlertDialog, AlertDialogAction, AlertDialogCancel, AlertDialogContent, AlertDialogDescription, AlertDialogFooter, AlertDialogHeader, AlertDialogTitle, AlertDialogTrigger } from "@/components/ui/alert-dialog";
+import { Avatar } from "@/components/ui/avatar";
+import { Button } from "@/components/ui/button";
+import { logout } from "@/lib/actions";
+import { fetchDeleteSelf, fetchSelfUserData, fetchSettings } from "@/lib/api";
+import { formToastError, toSentenceCase } from "@/lib/utils";
+import { Loader2 } from "lucide-react";
+import { useRouter } from "next/navigation";
+import { FormEvent, useEffect, useState } from "react";
 
 export default function ConfigurationPage() {
 	const [userData, setUserData] = useState<any>();
@@ -48,12 +48,17 @@ export default function ConfigurationPage() {
 		if (username) settingsSentData.username = username;
 		if (password) settingsSentData.password = password;
 
-		const data = await fetchSettings(settingsSentData);
-		console.log(data);
+		if (Object.keys(settingsSentData).length === 0) {
+			formToastError("no form fields filled out");
+		}
+		else {
 
-		if (data["error"]) formToastError(toSentenceCase(data["error"]));
-		else router.push("/dashboard");
+			const data = await fetchSettings(settingsSentData);
+			console.log(data);
+			if (data["error"]) formToastError(toSentenceCase(data["error"]));
+			else router.push("/dashboard");
 
+		}
 		setLoading(false);
 	};
 
@@ -103,10 +108,12 @@ export default function ConfigurationPage() {
 						</label>
 						<div className="flex justify-between items-center pt-6">
 							<AlertDialog>
-								<AlertDialogTrigger>
-									<Button type="button" variant="secondary" className="w-fit px-5 py-7 font-semibold text-white text-base sm:text-lg shadow-lg" style={{backgroundColor: "hsl(var(--primary))"}}>
-										Delete account
-									</Button>
+								<AlertDialogTrigger asChild>
+									<div>
+										<Button type="button" variant="ghost" className="text-gray-500">
+											Delete account
+										</Button>
+									</div>
 								</AlertDialogTrigger>
 								<AlertDialogContent>
 									<AlertDialogHeader>
@@ -120,20 +127,20 @@ export default function ConfigurationPage() {
 								</AlertDialogContent>
 							</AlertDialog>
 
-							<Button disabled={loading} type="submit" variant="secondary" className="w-fit px-5 py-7 font-semibold text-base sm:text-lg shadow-lg flex flex-row gap-2">
-								{loading ? (
-									<>
-										<Loader2 className="size-6 animate-spin" />
-										Loading
-									</>
-								) : (
-									<>Update</>
-								)}
-							</Button>
+							{loading ? (
+								<div className="flex flex-col items-center justify-center gap-2">
+									<Loader2 className="size-6 animate-spin" />
+									Loading
+								</div>
+							) : (
+								<Button disabled={loading} type="submit" variant="secondary" size="lg" >
+									Update
+								</Button>
+							)}
 						</div>
 					</form>
 				</div>
-			</section>
-		</main>
+			</section >
+		</main >
 	);
 }
