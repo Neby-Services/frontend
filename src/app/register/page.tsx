@@ -51,7 +51,7 @@ export default function Register() {
 			else if (userType == "admin") registerSentData["community_name"] = communityName;
 
 			const data = await fetchRegister(registerSentData);
-			console.log(data);
+			console.log("hola",data);
 
 			if (data["error"]) formToastError(toSentenceCase(data["error"]));
 			else router.push("/dashboard");

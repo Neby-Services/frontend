@@ -1,8 +1,14 @@
 "use client";
 
-import {Avatar} from "@/components/ui/avatar";
-import {Badge} from "@/components/ui/badge";
-import {Button} from "@/components/ui/button";
+import { Avatar } from "@/components/ui/avatar";
+import { Badge } from "@/components/ui/badge";
+import { Button } from "@/components/ui/button";
+import { logout } from "@/lib/actions";
+import { useRouter } from "next/navigation";
+import { fetchCreateNotification, fetchNotificationServiceSelf } from '@/lib/api';
+import { formToastError, toSentenceCase } from "@/lib/utils";
+import { useEffect, useState } from "react";
+import { fetchSelfUserData } from "@/lib/api";
 
 interface ServiceContentProps {
 	id: string;
@@ -12,9 +18,44 @@ interface ServiceContentProps {
 	type: string;
 	price: number;
 	img?: string;
+	creatorId?: string;
 }
 
-export default function ServiceContent({id, title, description, username, type, price, img}: ServiceContentProps) {
+export default function ServiceContent({ id, title, description, username, type, price, img, creatorId }: ServiceContentProps) {
+	const [isDisabled, setIsDisabled] = useState(false);
+	const [refetch, setRefetch] = useState(false);
+
+	const router = useRouter();
+
+	useEffect(() => {
+		(async () => {
+			const selfUserData = await fetchSelfUserData();
+			const userData: UserReceivedData = selfUserData["user"];
+			if (creatorId === userData.id) setIsDisabled(true)
+			else {
+				const notification = await fetchNotificationServiceSelf(id);
+				if (!notification["error"]) setIsDisabled(true)
+			}
+		})()
+	}, [refetch])
+
+
+	const handleRequest = async () => {
+		try {
+			const params: NotificationCreateQueryParams = {
+				type: "services",
+				service_id: id
+			}
+			const data = await fetchCreateNotification(params);
+			if (data["error"]) formToastError(toSentenceCase(data["error"]));
+			else {
+				setRefetch((prev) => !prev)
+			}
+		} catch (error) {
+			logout();
+			router.push("/");
+		}
+	}
 	return (
 		<div className="w-full flex flex-col">
 			<div className="flex justify-between items-center gap-4 md:gap-6">
@@ -33,7 +74,7 @@ export default function ServiceContent({id, title, description, username, type, 
 					<h1 className="font-bold text-xl md:text-2xl mb-2">{title}</h1>
 					<p className="text-base md:text-lg overflow-visible pt-4">{description}</p>
 					<div className="flex w-full justify-between items-center gap-4 mt-4">
-						<Button variant="secondary" size="lg" className="px-4 font-semibold text-base sm:text-lg shadow-md flex flex-row gap-2">
+						<Button disabled={isDisabled} onClick={handleRequest} variant="secondary" size="lg" className="px-4 font-semibold text-base sm:text-lg shadow-md flex flex-row gap-2">
 							Request
 							<svg className="size-6" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" viewBox="0 0 24 24">
 								<path stroke="none" d="M0 0h24v24H0z" fill="none" />

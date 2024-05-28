@@ -2,9 +2,9 @@
 
 import Header from "@/components/header";
 import ServiceCard from "@/components/service-card";
-import {fetchServices} from "@/lib/api";
-import {useRouter} from "next/navigation";
-import {useEffect, useState} from "react";
+import { fetchServices } from "@/lib/api";
+import { useRouter } from "next/navigation";
+import { useEffect, useState } from "react";
 
 export default function Dashboard() {
 	const [services, setServices] = useState<ServiceReceivedData[]>([]);
@@ -16,7 +16,7 @@ export default function Dashboard() {
 	useEffect(() => {
 		const fetchData = async () => {
 			try {
-				const data = await fetchServices();
+				const data = await fetchServices("open");
 				console.log(data);
 				if (!data.error) setServices(data["services"]);
 				setLoading(false);

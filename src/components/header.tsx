@@ -1,20 +1,22 @@
 "use client";
 
-import {Avatar} from "@/components/ui/avatar";
-import {Button} from "@/components/ui/button";
-import {logout} from "@/lib/actions";
-import {fetchSelfUserData} from "@/lib/api";
-import {AnimatePresence, motion} from "framer-motion";
+import { Avatar } from "@/components/ui/avatar";
+import { Button } from "@/components/ui/button";
+import { logout } from "@/lib/actions";
+import { fetchSelfUserData } from "@/lib/api";
+import { AnimatePresence, motion } from "framer-motion";
 import Link from "next/link";
-import {useRouter} from "next/navigation";
-import {useEffect, useRef, useState} from "react";
+import { useRouter, usePathname } from "next/navigation";
+import { MouseEventHandler, useEffect, useRef, useState } from "react";
+import Notifications from "./notifications";
 
 interface HeaderProps {
 	redirect?: boolean;
 }
 
-export default function Header({redirect = true}: HeaderProps) {
+export default function Header({ redirect = true }: HeaderProps) {
 	const [menuOpen, setMenuOpen] = useState(false);
+	const [notificationsOpen, setNotificationsOpen] = useState(false);
 	const [userMenuOpen, setUserMenuOpen] = useState(false);
 	const [userData, setUserData] = useState<UserReceivedData>();
 
@@ -22,13 +24,19 @@ export default function Header({redirect = true}: HeaderProps) {
 
 	const userMenuRef = useRef<HTMLDivElement>(null);
 	const userMenuToggleRef = useRef<HTMLButtonElement>(null);
+	const notificationMenuRef = useRef<HTMLDivElement>(null);
+	const notificationToggleRef = useRef<HTMLButtonElement>(null);
 
 	const router = useRouter();
+	const pathname = usePathname();
 
 	const handleUserMenu = (event: MouseEvent | TouchEvent) => {
 		if (!userMenuOpen && userMenuToggleRef.current && userMenuToggleRef.current.contains(event.target as Node)) setUserMenuOpen(true);
+		if (!notificationsOpen && notificationToggleRef.current && notificationToggleRef.current.contains(event.target as Node)) setNotificationsOpen(true);
 		if (userMenuRef.current && !userMenuRef.current.contains(event.target as Node)) setUserMenuOpen(false);
+		if (notificationMenuRef.current && !notificationMenuRef.current.contains(event.target as Node)) setNotificationsOpen(false);
 	};
+
 
 	useEffect(() => {
 		document.addEventListener("mousedown", handleUserMenu);
@@ -60,7 +68,7 @@ export default function Header({redirect = true}: HeaderProps) {
 		return (
 			<header className="relative w-full z-10">
 				<div className="fixed flex justify-between items-center w-full h-20 xl:h-28 px-6 md:px-16 bg-background shadow-lg">
-					<div className="max-w-[1800px] min-[1800px]:mx-auto flex flex-row w-full items-center gap-10">
+					<div className="max-w-[1800px] min-[1800px]:mx-auto flex flex-row w-full items-center gap-4">
 						<div className="flex-1 flex justify-start">
 							<span className="flex items-center gap-8">
 								<Link href="/dashboard">
@@ -114,6 +122,35 @@ export default function Header({redirect = true}: HeaderProps) {
 										<path className="fill-primary stroke-none" d="M12 6.9640836c.556578 0 1.386924 2.8618972 1.780455 3.2554624.393565.39353 3.255462 1.223876 3.255462 1.780453 0 .556578-2.861897 1.386924-3.255462 1.780455-.393531.393565-1.223877 3.255462-1.780455 3.255462-.556577 0-1.386923-2.861897-1.780453-3.255462-.393566-.393531-3.2554635-1.223877-3.2554635-1.780455 0-.556577 2.8618975-1.386923 3.2554635-1.780453.39353-.3935652 1.223876-3.2554624 1.780453-3.2554624Z" />
 									</svg>
 								</span>
+								{
+									pathname !== '/notifications' ?
+										(
+
+											<div className="relative" >
+												<button className="flex items-center" ref={notificationToggleRef} >
+													<svg className="size-7" xmlns="http://www.w3.org/2000/svg" width="1em" height="1em" viewBox="0 0 20 20"><path fill="currentColor" d="M4 8a6 6 0 0 1 4.03-5.67a2 2 0 1 1 3.95 0A6 6 0 0 1 16 8v6l3 2v1H1v-1l3-2zm8 10a2 2 0 1 1-4 0z" /></svg>
+												</button>
+												<AnimatePresence mode="wait">
+													{notificationsOpen && (
+														<motion.div initial={{ y: "-10%", opacity: 0 }} animate={{ y: "0%", opacity: 1, transition: { duration: 0.3, ease: [0.33, 1, 0.68, 1] } }} exit={{ y: "-10%", opacity: 0, transition: { duration: 0.3, ease: [0.33, 1, 0.68, 1] } }} className="absolute min-w-60 border border-slate-300 bg-white shadow-lg rounded-md z-30 top-20 right-0 flex flex-col p-4 overflow-y-auto">
+															<div ref={notificationMenuRef}>
+																<div className="flex justify-between gap-10">
+																	<h3 className="text-lg">Notifications</h3>
+																	<Button onClick={() => {
+																		router.push('/notifications');
+																	}} variant="outline">
+																		See all
+																	</Button>
+																</div>
+																<Notifications quantity={5} />
+															</div>
+														</motion.div>
+													)}
+												</AnimatePresence>
+											</div>
+										)
+										: null
+								}
 								<div className="relative">
 									<button className="hover:scale-110 transition-all" ref={userMenuToggleRef}>
 										<Avatar className="size-14" title={userData["username"]}>
@@ -124,7 +161,7 @@ export default function Header({redirect = true}: HeaderProps) {
 									</button>
 									<AnimatePresence mode="wait">
 										{userMenuOpen && (
-											<motion.div initial={{y: "-10%", opacity: 0}} animate={{y: "0%", opacity: 1, transition: {duration: 0.3, ease: [0.33, 1, 0.68, 1]}}} exit={{y: "-10%", opacity: 0, transition: {duration: 0.3, ease: [0.33, 1, 0.68, 1]}}} className="absolute min-w-60 border border-slate-300 bg-white shadow-lg rounded-md z-30 top-20 right-0 flex flex-col p-4 overflow-y-auto">
+											<motion.div initial={{ y: "-10%", opacity: 0 }} animate={{ y: "0%", opacity: 1, transition: { duration: 0.3, ease: [0.33, 1, 0.68, 1] } }} exit={{ y: "-10%", opacity: 0, transition: { duration: 0.3, ease: [0.33, 1, 0.68, 1] } }} className="absolute min-w-60 border border-slate-300 bg-white shadow-lg rounded-md z-30 top-20 right-0 flex flex-col p-4 overflow-y-auto">
 												<div ref={userMenuRef}>
 													<ul className="flex flex-col gap-2 font-medium text-lg">
 														<li>
@@ -161,6 +198,7 @@ export default function Header({redirect = true}: HeaderProps) {
 								</svg>
 							</button>
 						</div>
+
 					</div>
 				</div>
 				<div className="h-20 xl:h-28"></div>
@@ -168,8 +206,8 @@ export default function Header({redirect = true}: HeaderProps) {
 					<AnimatePresence mode="wait">
 						{menuOpen && (
 							<>
-								<motion.div initial={{opacity: 0}} animate={{opacity: 0.3}} exit={{opacity: 0}} onClick={() => setMenuOpen(!menuOpen)} className="fixed bg-black w-screen h-screen z-20 top-0 left-0"></motion.div>
-								<motion.div initial={{x: "-100%"}} animate={{x: "0%", transition: {duration: 0.5, ease: [0.33, 1, 0.68, 1]}}} exit={{x: "-100%", transition: {duration: 0.5, ease: [0.33, 1, 0.68, 1]}}} className="fixed w-5/6 max-w-sm bg-white h-screen shadow-xl z-30 top-0 left-0 flex flex-col py-6 px-8 overflow-y-auto">
+								<motion.div initial={{ opacity: 0 }} animate={{ opacity: 0.3 }} exit={{ opacity: 0 }} onClick={() => setMenuOpen(!menuOpen)} className="fixed bg-black w-screen h-screen z-20 top-0 left-0"></motion.div>
+								<motion.div initial={{ x: "-100%" }} animate={{ x: "0%", transition: { duration: 0.5, ease: [0.33, 1, 0.68, 1] } }} exit={{ x: "-100%", transition: { duration: 0.5, ease: [0.33, 1, 0.68, 1] } }} className="fixed w-5/6 max-w-sm bg-white h-screen shadow-xl z-30 top-0 left-0 flex flex-col py-6 px-8 overflow-y-auto">
 									<div className="w-full flex justify-between items-center">
 										<Avatar className="size-14" title={userData["username"]}>
 											<div className="bg-secondary size-full grid place-content-center text-background font-bold text-2xl overflow-hidden">
@@ -217,6 +255,11 @@ export default function Header({redirect = true}: HeaderProps) {
 												</Link>
 											</li>
 											<li>
+												<Link className="hover:underline underline-offset-8 decoration-2" href="/notifications">
+													Notifications
+												</Link>
+											</li>
+											<li>
 												<Link className="hover:underline underline-offset-8 decoration-2" href="/settings">
 													Settings
 												</Link>
@@ -238,6 +281,7 @@ export default function Header({redirect = true}: HeaderProps) {
 						)}
 					</AnimatePresence>
 				</div>
+
 			</header>
 		);
 	}
