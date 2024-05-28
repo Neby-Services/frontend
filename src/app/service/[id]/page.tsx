@@ -3,7 +3,7 @@
 import Header from "@/components/header";
 import ServiceContent from "@/components/service-content";
 import {logout} from "@/lib/actions";
-import {fetchServiceById} from "@/lib/api";
+import {fetchGetNotificationsSelf, fetchServiceById} from "@/lib/api";
 import {useRouter} from "next/navigation";
 import {useEffect, useState} from "react";
 
@@ -17,7 +17,6 @@ export default function Service({params}: {params: {id: string}}) {
 			try {
 				const data = await fetchServiceById(params.id);
 				setService(data["service"]);
-				console.log("holaaa");
 				setLoading(false);
 			} catch (error) {
 				console.log("jola", error);

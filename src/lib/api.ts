@@ -36,8 +36,9 @@ export const fetchCreateService = async (body: ServiceSentData) => {
 	});
 };
 
-export const fetchServices = async () => {
-	return await fetchData(`${process.env["NEXT_PUBLIC_API_PATH"]}/services`);
+export const fetchServices = async (status: string) => {
+	const params = new URLSearchParams({ status });
+	return await fetchData(`${process.env["NEXT_PUBLIC_API_PATH"]}/services?${params.toString()}`);
 };
 
 export const fetchSelfUserData = async () => {
@@ -59,9 +60,22 @@ export const fetchCreateNotification = async (queryStrings: NotificationCreateQu
 	})
 }
 
+export const fetchGetNotificationsSelf = async () => {
+	return await fetchData(`${process.env["NEXT_PUBLIC_API_PATH"]}/notifications`);
+}
+
 export const fetchNotificationServiceSelf = async (service_id: string) => {
 	return await fetchData(`${process.env["NEXT_PUBLIC_API_PATH"]}/services/${service_id}/notifications`);
 }
 export const fetchArchievements = async () => {
 	return await fetchData(`${process.env["NEXT_PUBLIC_API_PATH"]}/user_achievements`);
 };
+
+export const fetchHandleNotification = async (action: string, serviceNotificationId: string) => {
+
+	const params = new URLSearchParams({ action });
+	return await fetchData(`${process.env["NEXT_PUBLIC_API_PATH"]}/notifications/${serviceNotificationId}?
+	${params.toString()}`, {
+		method: "PUT"
+	});
+}
