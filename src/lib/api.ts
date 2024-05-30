@@ -102,6 +102,10 @@ export const fetchHandleNotification = async (action: string, serviceNotificatio
 	);
 };
 
+export const fetchRatings = async (user_id: string) => {
+	return await fetchData(`${process.env["NEXT_PUBLIC_API_PATH"]}/ratings/user/${user_id}`);
+};
+
 export const fetchClaimArchievements = async (id: string) => {
 	return await fetchData(`${process.env["NEXT_PUBLIC_API_PATH"]}/claim_achievement/${id}`, {
 		method: "PUT",
