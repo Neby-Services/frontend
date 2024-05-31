@@ -1,21 +1,25 @@
 "use client";
 
 import Header from "@/components/header";
-import { AlertDialog, AlertDialogAction, AlertDialogCancel, AlertDialogContent, AlertDialogDescription, AlertDialogFooter, AlertDialogHeader, AlertDialogTitle, AlertDialogTrigger } from "@/components/ui/alert-dialog";
-import { Avatar } from "@/components/ui/avatar";
-import { Button } from "@/components/ui/button";
-import { logout } from "@/lib/actions";
-import { fetchDeleteSelf, fetchSelfUserData, fetchSettings } from "@/lib/api";
-import { formToastError, toSentenceCase } from "@/lib/utils";
-import { Loader2 } from "lucide-react";
-import { useRouter } from "next/navigation";
-import { FormEvent, useEffect, useState } from "react";
+import {AlertDialog, AlertDialogAction, AlertDialogCancel, AlertDialogContent, AlertDialogDescription, AlertDialogFooter, AlertDialogHeader, AlertDialogTitle, AlertDialogTrigger} from "@/components/ui/alert-dialog";
+import {Avatar} from "@/components/ui/avatar";
+import {Button} from "@/components/ui/button";
+import {logout} from "@/lib/actions";
+import {fetchDeleteSelf, fetchLogin, fetchSelfUserData, fetchSettings} from "@/lib/api";
+import {formToastError, toSentenceCase} from "@/lib/utils";
+import {Loader2} from "lucide-react";
+import {useRouter} from "next/navigation";
+import {FormEvent, useEffect, useState} from "react";
 
 export default function ConfigurationPage() {
 	const [userData, setUserData] = useState<any>();
 	const [email, setEmail] = useState("");
+	const [originalEmail, setOriginalEmail] = useState("");
 	const [username, setUsername] = useState("");
 	const [password, setPassword] = useState("");
+	const [newPassword, setNewPassword] = useState("");
+	const [passwordVisible, setPasswordVisible] = useState(false);
+	const [newPasswordVisible, setNewPasswordVisible] = useState(false);
 	const [loading, setLoading] = useState(false);
 	const router = useRouter();
 
@@ -25,6 +29,7 @@ export default function ConfigurationPage() {
 				const data = await fetchSelfUserData();
 				if (!data.error) {
 					setUserData(data["user"]);
+					setOriginalEmail(data["user"].email);
 				} else {
 					logout();
 				}
@@ -46,18 +51,33 @@ export default function ConfigurationPage() {
 		const settingsSentData: SettingsSentData = {};
 		if (email) settingsSentData.email = email;
 		if (username) settingsSentData.username = username;
-		if (password) settingsSentData.password = password;
+
+		if (newPassword) {
+			if (!password) {
+				formToastError("Old password is required to set a new password");
+				setLoading(false);
+				return;
+			} else {
+				const loginSentData = {password, email: originalEmail};
+				const info = await fetchLogin(loginSentData);
+
+				if (info["error"]) {
+					formToastError(toSentenceCase(info["error"]));
+					setLoading(false);
+					return;
+				} else {
+					settingsSentData.password = newPassword;
+				}
+			}
+		}
 
 		if (Object.keys(settingsSentData).length === 0) {
-			formToastError("no form fields filled out");
-		}
-		else {
-
+			formToastError("No form fields filled out");
+		} else {
 			const data = await fetchSettings(settingsSentData);
 			console.log(data);
 			if (data["error"]) formToastError(toSentenceCase(data["error"]));
 			else router.push("/dashboard");
-
 		}
 		setLoading(false);
 	};
@@ -101,9 +121,51 @@ export default function ConfigurationPage() {
 							<input onChange={e => setUsername(e.target.value)} value={username} className="border-2 rounded-lg text-base p-1.5 placeholder-gray-400" type="text" placeholder={userData?.username || "Enter your username"} />
 						</label>
 						<label className="flex flex-col text-sm sm:text-lg font-semibold gap-2 mb-6">
-							Password
+							Old Password
 							<div className="relative">
-								<input onChange={e => setPassword(e.target.value)} value={password} className="border-2 rounded-lg text-base p-1.5 w-full pr-12" type="password" />
+								<button type="button" tabIndex={-1} onClick={() => setPasswordVisible(!passwordVisible)}>
+									<svg className="absolute top-1/2 -translate-y-1/2 right-4 size-6" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" viewBox="0 0 24 24">
+										{passwordVisible ? (
+											<>
+												<path stroke="none" d="M0 0h24v24H0z" fill="none" />
+												<path d="M10.585 10.587a2 2 0 0 0 2.829 2.828" />
+												<path d="M16.681 16.673a8.717 8.717 0 0 1 -4.681 1.327c-3.6 0 -6.6 -2 -9 -6c1.272 -2.12 2.712 -3.678 4.32 -4.674m2.86 -1.146a9.055 9.055 0 0 1 1.82 -.18c3.6 0 6.6 2 9 6c-.666 1.11 -1.379 2.067 -2.138 2.87" />
+												<path d="M3 3l18 18" />
+											</>
+										) : (
+											<>
+												<path stroke="none" d="M0 0h24v24H0z" fill="none" />
+												<path d="M10 12a2 2 0 1 0 4 0a2 2 0 0 0 -4 0" />
+												<path d="M21 12c-2.4 4 -5.4 6 -9 6c-3.6 0 -6.6 -2 -9 -6c2.4 -4 5.4 -6 9 -6c3.6 0 6.6 2 9 6" />
+											</>
+										)}
+									</svg>
+								</button>
+								<input onChange={e => setPassword(e.target.value)} value={password} className="border-2 rounded-lg text-base p-1.5 w-full pr-12" type={passwordVisible ? "text" : "password"} />
+							</div>
+						</label>
+						<label className="flex flex-col text-sm sm:text-lg font-semibold gap-2 mb-6">
+							New Password
+							<div className="relative">
+								<button type="button" tabIndex={-1} onClick={() => setNewPasswordVisible(!newPasswordVisible)}>
+									<svg className="absolute top-1/2 -translate-y-1/2 right-4 size-6" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" viewBox="0 0 24 24">
+										{newPasswordVisible ? (
+											<>
+												<path stroke="none" d="M0 0h24v24H0z" fill="none" />
+												<path d="M10.585 10.587a2 2 0 0 0 2.829 2.828" />
+												<path d="M16.681 16.673a8.717 8.717 0 0 1 -4.681 1.327c-3.6 0 -6.6 -2 -9 -6c1.272 -2.12 2.712 -3.678 4.32 -4.674m2.86 -1.146a9.055 9.055 0 0 1 1.82 -.18c3.6 0 6.6 2 9 6c-.666 1.11 -1.379 2.067 -2.138 2.87" />
+												<path d="M3 3l18 18" />
+											</>
+										) : (
+											<>
+												<path stroke="none" d="M0 0h24v24H0z" fill="none" />
+												<path d="M10 12a2 2 0 1 0 4 0a2 2 0 0 0 -4 0" />
+												<path d="M21 12c-2.4 4 -5.4 6 -9 6c-3.6 0 -6.6 -2 -9 -6c2.4 -4 5.4 -6 9 -6c3.6 0 6.6 2 9 6" />
+											</>
+										)}
+									</svg>
+								</button>
+								<input onChange={e => setNewPassword(e.target.value)} value={newPassword} className="border-2 rounded-lg text-base p-1.5 w-full pr-12" type={newPasswordVisible ? "text" : "password"} />
 							</div>
 						</label>
 						<div className="flex justify-between items-center pt-6">
@@ -133,14 +195,14 @@ export default function ConfigurationPage() {
 									Loading
 								</div>
 							) : (
-								<Button disabled={loading} type="submit" variant="secondary" size="lg" >
+								<Button disabled={loading} type="submit" variant="secondary" size="lg">
 									Update
 								</Button>
 							)}
 						</div>
 					</form>
 				</div>
-			</section >
-		</main >
+			</section>
+		</main>
 	);
 }
