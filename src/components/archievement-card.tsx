@@ -1,28 +1,29 @@
 "use client";
 
-import {Button} from "@/components/ui/button";
+import { Button } from "@/components/ui/button";
+import { AchievementStatus, capitalizeFirstLetter } from '@/lib/utils';
 
 interface ServiceCardProps {
 	idarch: string;
-	titttle: string;
-	descr: string;
+	title: string;
+	description: string;
 	price: string;
-	stat: string;
+	status: string;
 	onClaim: (id: string) => void;
 }
 
-export default function ArchievementCard({idarch, titttle, descr, price, stat, onClaim}: ServiceCardProps) {
+export default function ArchievementCard({ idarch, title, description, price, status, onClaim }: ServiceCardProps) {
 	return (
 		<main className="mx-auto sm:pb-16">
 			<div className={`border-none shadow-md flex flex-col overflow-hidden h-52 w-[280px] rounded-3xl p-4 bg-white`}>
 				<div className="relative flex-none mb-[17px] w-[320px] h-[122px] flex flex-col box-border">
 					<div className="relative flex-none mb-[20px] w-[227px] h-[76px] flex flex-col box-border">
 						<div className="relative flex-none mb-[8px] w-[227px] h-[38px] flex justify-start items-center box-border">
-							<span className="relative flex-none w-full h-[38px] text-[#003612] font-inter text-[16px] font-semibold leading-[19.36px] pt-4">{titttle}</span>
+							<span className="relative flex-none w-full h-[38px] text-[#003612] font-inter text-[16px] font-semibold leading-[19.36px] pt-4">{title}</span>
 						</div>
 						<br />
 						<div className="relative flex-none w-[280px] h-[30px] flex justify-start items-center box-border">
-							<span className="relative mr-[10px] h-[30px] text-primary font-inter text-[12px] font-normal mb-10 w-full pt-11">{descr}</span>
+							<span className="relative mr-[10px] h-[30px] text-primary font-inter text-[12px] font-normal mb-10 w-full pt-11">{description}</span>
 						</div>
 						<br />
 					</div>
@@ -32,14 +33,12 @@ export default function ArchievementCard({idarch, titttle, descr, price, stat, o
 							<Button
 								variant="secondary"
 								size="sm"
+								disabled={status === AchievementStatus.CLAIMED || status === AchievementStatus.IN_PROGRESS}
 								className="px-4 font-semibold text-[8px] sm:text-lg shadow-md"
-								style={stat === "Claimed" || stat === "In progress" ? {backgroundColor: "#4af77e80"} : {}}
 								onClick={() => {
-									if (stat === "Completed") {
-										onClaim(idarch);
-									}
+									onClaim(idarch);
 								}}>
-								{stat}
+								{capitalizeFirstLetter(status)}
 							</Button>
 
 							<div className="flex items-center gap-2">

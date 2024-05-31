@@ -4,6 +4,7 @@ import ArchievementCard from "@/components/archievement-card";
 import Header from "@/components/header";
 import { logout } from "@/lib/actions";
 import { fetchArchievements, fetchClaimArchievements } from "@/lib/api";
+import { formToastError } from "@/lib/utils";
 import { useRouter } from "next/navigation";
 import { useEffect, useState } from "react";
 
@@ -15,7 +16,7 @@ export default function Achievements() {
 
 	useEffect(() => {
 		const fetchData = async () => {
-			setLoading(true); 
+			setLoading(true);
 			try {
 				const data = await fetchArchievements();
 				setAchievements(data.user_achievements);
@@ -24,7 +25,7 @@ export default function Achievements() {
 				logout();
 				router.push("/");
 			} finally {
-				setLoading(false); 
+				setLoading(false);
 			}
 		};
 
@@ -34,12 +35,14 @@ export default function Achievements() {
 	const claimAchievement = async (id: string) => {
 		try {
 			const response = await fetchClaimArchievements(id);
-			if (response.ok) {
+			console.log(response);
+			if (response.message) {
 				console.log("Achievement claimed successfully");
 				onRefetch();
-			} else {
+			}
+			if (response.error) {
 				onRefetch();
-				console.error("Error claiming achievement:", response.statusText);
+				formToastError(response["error"])
 			}
 		} catch (error) {
 			console.error("Error:", error);
@@ -57,7 +60,7 @@ export default function Achievements() {
 						<p className="text-xl text-gray-600 animate-pulse">Loading achievements...</p>
 					</div>
 				) : achievements.length > 0 ? (
-					achievements.map((achievement: UserAchievement) => <ArchievementCard key={achievement.id} idarch={achievement.id} titttle={achievement.achievement.title} descr={achievement.achievement.description} stat={achievement.status === "in_progress" ? "In progress" : achievement.status === "completed" ? "Completed" : "Claimed"} price={achievement.achievement.reward} onClaim={claimAchievement} />)
+					achievements.map((achievement: UserAchievement) => <ArchievementCard key={achievement.id} idarch={achievement.id} title={achievement.achievement.title} description={achievement.achievement.description} status={achievement.status} price={achievement.achievement.reward} onClaim={claimAchievement} />)
 				) : (
 					<div className="text-center">
 						<p className="text-2xl">No achievements available.</p>
