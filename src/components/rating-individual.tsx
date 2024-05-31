@@ -14,7 +14,7 @@ const RatingListBasic: React.FC<RatingListBasicProps> = ({reviews}) => {
 	return (
 		<div className="max-w-lg">
 			<div className="overflow-hidden bg-white rounded shadow-md text-slate-500 shadow-slate-200">
-				<div className="p-6">
+				<div className="p-6 w-[500px]">
 					<div className="flex flex-col w-full divide-y divide-slate-200">
 						{reviews.map((review, index) => (
 							<div key={index} className="flex flex-col gap-2 py-4">
