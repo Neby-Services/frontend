@@ -3,13 +3,15 @@
 import {Button} from "@/components/ui/button";
 
 interface ServiceCardProps {
+	idarch: string;
 	titttle: string;
 	descr: string;
 	price: string;
 	stat: string;
+	onClaim: (id: string) => void;
 }
 
-export default function ArchievementCard({titttle, descr, price, stat}: ServiceCardProps) {
+export default function ArchievementCard({idarch, titttle, descr, price, stat, onClaim}: ServiceCardProps) {
 	return (
 		<main className="mx-auto sm:pb-16">
 			<div className={`border-none shadow-md flex flex-col overflow-hidden h-52 w-[280px] rounded-3xl p-4 bg-white`}>
@@ -27,7 +29,16 @@ export default function ArchievementCard({titttle, descr, price, stat}: ServiceC
 					<br />
 					<div className="relative flex-none mb-[20px] h-[26px] w-full flex justify-between items-center box-border mt-4">
 						<div className="flex items-center gap-4">
-							<Button variant="secondary" size="sm" className="px-4 font-semibold text-[8px] sm:text-lg shadow-md" style={stat === "Claimed" || stat === "In progress" ? {backgroundColor: "#4af77e80"} : {}}>
+							<Button
+								variant="secondary"
+								size="sm"
+								className="px-4 font-semibold text-[8px] sm:text-lg shadow-md"
+								style={stat === "Claimed" || stat === "In progress" ? {backgroundColor: "#4af77e80"} : {}}
+								onClick={() => {
+									if (stat === "Completed") {
+										onClaim(idarch);
+									}
+								}}>
 								{stat}
 							</Button>
 
