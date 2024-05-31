@@ -2,10 +2,10 @@
 
 import ArchievementCard from "@/components/archievement-card";
 import Header from "@/components/header";
-import {logout} from "@/lib/actions";
-import {fetchArchievements} from "@/lib/api";
-import {useRouter} from "next/navigation";
-import {useEffect, useState} from "react";
+import { logout } from "@/lib/actions";
+import { fetchArchievements, fetchClaimArchievements } from "@/lib/api";
+import { useRouter } from "next/navigation";
+import { useEffect, useState } from "react";
 
 export default function Achievements() {
 	const router = useRouter();
@@ -15,7 +15,7 @@ export default function Achievements() {
 
 	useEffect(() => {
 		const fetchData = async () => {
-			setLoading(true); // Asegura que el estado de carga se establezca en true antes de la llamada a la API
+			setLoading(true); 
 			try {
 				const data = await fetchArchievements();
 				setAchievements(data.user_achievements);
@@ -24,7 +24,7 @@ export default function Achievements() {
 				logout();
 				router.push("/");
 			} finally {
-				setLoading(false); // Asegura que el estado de carga se establezca en false en ambos casos
+				setLoading(false); 
 			}
 		};
 

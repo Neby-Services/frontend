@@ -20,8 +20,6 @@ export default function ServiceNotificationCard({ achievementNotification }: Ach
 
 	const router = useRouter();
 	const pathname = usePathname();
-	console.log(achievementNotification);
-
 
 	return (
 		<div className="px-3 py-5 w-[300px] rounded-3xl shadow-md flex flex-col justify-between items-center sm:flex-row gap-3 sm:w-[492px]">
