@@ -112,3 +112,16 @@ export const fetchClaimArchievements = async (id: string) => {
 		headers: {"Content-Type": "application/json"}
 	});
 };
+
+export const fetchRate = async (service_id: string, rating: number, description: string) => {
+	return await fetchData(`${process.env["NEXT_PUBLIC_API_PATH"]}/ratings/${service_id}`, {
+		method: "POST",
+		headers: {
+			"Content-Type": "application/json"
+		},
+		body: JSON.stringify({
+			rating: rating,
+			description: description
+		})
+	});
+};
