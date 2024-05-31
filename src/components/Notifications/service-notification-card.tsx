@@ -1,7 +1,7 @@
 "use client";
 
 import { Avatar } from "@/components/ui/avatar";
-import { Button } from "./ui/button";
+import { Button } from "../ui/button";
 import { useRouter, usePathname } from "next/navigation";
 import { logout } from "@/lib/actions";
 import { fetchHandleNotification } from "@/lib/api";

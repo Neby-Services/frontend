@@ -6,9 +6,9 @@ import { logout } from "@/lib/actions";
 import { fetchSelfUserData } from "@/lib/api";
 import { AnimatePresence, motion } from "framer-motion";
 import Link from "next/link";
-import { useRouter, usePathname } from "next/navigation";
-import { MouseEventHandler, useEffect, useRef, useState } from "react";
-import Notifications from "./notifications";
+import { usePathname, useRouter } from "next/navigation";
+import { useEffect, useRef, useState } from "react";
+import Notifications from "./Notifications/notifications";
 
 interface HeaderProps {
 	redirect?: boolean;

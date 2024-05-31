@@ -1,17 +1,18 @@
 // types.ts
-export interface Achievement {
+interface Achievement {
 	title: string;
 	description: string;
 	reward: string;
 }
 
-export interface UserAchievement {
+interface UserAchievement {
 	id: string;
 	user_id: string;
 	status: "in_progress" | "completed" | "claimed";
 	achievement: Achievement;
+	achievement_title: string;
 }
 
-export interface AchievementsData {
+interface AchievementsData {
 	user_achievements: UserAchievement[];
 }
