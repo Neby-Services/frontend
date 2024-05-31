@@ -5,7 +5,6 @@ import ArchievementCard from "@/components/archievement-card";
 import Header from "@/components/header";
 import {logout} from "@/lib/actions";
 import {fetchArchievements} from "@/lib/api";
-import {UserAchievement} from "@/types/archievementTypes";
 import {useRouter} from "next/navigation";
 import {useEffect, useState} from "react";
 

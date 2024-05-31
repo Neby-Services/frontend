@@ -1,6 +1,7 @@
 "use client";
 
-import ServiceNotificationCard from "@/components/service-notification-card";
+import ServiceNotificationCard from "@/components/Notifications/service-notification-card";
+import AchievementNotificationCard from "@/components/Notifications/achievement-notification-card";
 import { fetchGetNotificationsSelf } from "@/lib/api";
 import { useRouter } from "next/navigation";
 import { useEffect, useState } from "react";
@@ -34,15 +35,18 @@ export default function Notifications({ quantity }: NotificationsProps) {
 	return (
 		<section className="flex flex-col justify-center items-center py-6 gap-4">
 			{displayedNotifications.map((notification: NotificationGetSelfReceiveData) => (
-				notification.service_notification &&
-				<ServiceNotificationCard 
-					key={notification.id} 
-					username={notification.service_notification.sender.username} 
-					serviceTitle={notification.service_notification.service.title} 
-					onRefetch={onRefetch} 
-					status={notification.service_notification.status} 
-					serviceNotificationId={notification.service_notification.id} 
-				/>
+				notification.service_notification != undefined ?
+
+					<ServiceNotificationCard
+						key={notification.id}
+						username={notification.service_notification.sender.username}
+						serviceTitle={notification.service_notification.service.title}
+						onRefetch={onRefetch}
+						status={notification.service_notification.status}
+						serviceNotificationId={notification.service_notification.id}
+					/> : notification.achievement_notification != undefined ?
+						<AchievementNotificationCard key={notification.id} achievementNotification={notification.achievement_notification} />  : null
+
 			))}
 		</section>
 	);

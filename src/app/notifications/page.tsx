@@ -1,7 +1,7 @@
 "use client";
 
 import Header from "@/components/header";
-import Notifications from "@/components/notifications";
+import Notifications from "@/components/Notifications/notifications";
 
 export default function NotificationsPage() {
 	return (
