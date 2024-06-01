@@ -106,7 +106,7 @@ export default function Header({ redirect = true }: HeaderProps) {
 							</Link>
 						</div>
 						<div className="max-xl:hidden flex-1 flex justify-end">
-							<span className="flex justify-center items-center gap-8">
+							<span className="flex justify-center items-center gap-4">
 								<form className="relative">
 									<svg className="absolute top-1/2 -translate-y-1/2 left-4 size-6" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" viewBox="0 0 24 24">
 										<path stroke="none" d="M0 0h24v24H0z" fill="none" />
@@ -115,12 +115,14 @@ export default function Header({ redirect = true }: HeaderProps) {
 									</svg>
 									<input className="bg-slate-200 pl-12 px-4 py-3 font-medium rounded-full w-48" type="text" placeholder="Search..." />
 								</form>
-								<span className="flex justify-center items-center gap-2">
-									<p className="font-semibold text-lg truncate max-w-20">{userData["balance"]}</p>
-									<svg className="size-7" viewBox="0 0 24 24">
-										<circle className="fill-secondary stroke-primary" strokeWidth="2" cx="12" cy="12" r="9.8282385" />
-										<path className="fill-primary stroke-none" d="M12 6.9640836c.556578 0 1.386924 2.8618972 1.780455 3.2554624.393565.39353 3.255462 1.223876 3.255462 1.780453 0 .556578-2.861897 1.386924-3.255462 1.780455-.393531.393565-1.223877 3.255462-1.780455 3.255462-.556577 0-1.386923-2.861897-1.780453-3.255462-.393566-.393531-3.2554635-1.223877-3.2554635-1.780455 0-.556577 2.8618975-1.386923 3.2554635-1.780453.39353-.3935652 1.223876-3.2554624 1.780453-3.2554624Z" />
-									</svg>
+								<span>
+									<Link href="/wallet" className="flex justify-center items-center px-4 py-2 gap-2 rounded-full hover:bg-slate-200 transition-all">
+										<p className="font-semibold text-lg truncate max-w-20">{userData["balance"]}</p>
+										<svg className="size-7" viewBox="0 0 24 24">
+											<circle className="fill-secondary stroke-primary" strokeWidth="2" cx="12" cy="12" r="9.8282385" />
+											<path className="fill-primary stroke-none" d="M12 6.9640836c.556578 0 1.386924 2.8618972 1.780455 3.2554624.393565.39353 3.255462 1.223876 3.255462 1.780453 0 .556578-2.861897 1.386924-3.255462 1.780455-.393531.393565-1.223877 3.255462-1.780455 3.255462-.556577 0-1.386923-2.861897-1.780453-3.255462-.393566-.393531-3.2554635-1.223877-3.2554635-1.780455 0-.556577 2.8618975-1.386923 3.2554635-1.780453.39353-.3935652 1.223876-3.2554624 1.780453-3.2554624Z" />
+										</svg>
+									</Link>
 								</span>
 								{
 									pathname !== '/notifications' ?
