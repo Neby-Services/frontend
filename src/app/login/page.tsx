@@ -34,7 +34,7 @@ export default function Login() {
 			};
 
 			const data = await fetchLogin(loginSentData);
-			console.log(data);
+			console.log("login",data);
 
 			if (data["error"]) formToastError(toSentenceCase(data["error"]));
 			else router.push("/dashboard");
