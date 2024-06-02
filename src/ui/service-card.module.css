@@ -1,4 +1,12 @@
-.description {
+.descriptionLarge {
+	display: -webkit-box;
+	max-width: 100%;
+	-webkit-line-clamp: 5;
+	-webkit-box-orient: vertical;
+	overflow: hidden;
+}
+
+.descriptionSmall {
 	display: -webkit-box;
 	max-width: 100%;
 	-webkit-line-clamp: 3;
