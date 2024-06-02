@@ -3,47 +3,50 @@
 import {Avatar} from "@/components/ui/avatar";
 import {Badge} from "@/components/ui/badge";
 import {Button} from "@/components/ui/button";
-import {Card, CardContent, CardFooter, CardHeader, CardTitle} from "@/components/ui/card";
-import {cn} from "@/lib/utils";
 import styles from "@/ui/service-card.module.css";
 
 interface ServiceCardProps {
-	className?: string;
 	img?: string;
-	username: string;
+	username?: string;
 	type: string;
 	title: string;
 	description: string;
 	price: number;
 }
 
-export default function ServiceCard({className, img, username, type, title, description, price}: ServiceCardProps) {
+export default function ServiceCard({img, username, type, title, description, price}: ServiceCardProps) {
 	return (
-		<Card className={cn("border-none shadow-md flex overflow-hidden h-min md:h-80 rounded-3xl", className)}>
+		<div className="bg-card text-card-foreground border-none shadow-md flex overflow-hidden h-min md:h-80 rounded-3xl">
 			{img && (
 				<div className="w-80 hidden md:flex justify-center items-center overflow-hidden">
 					<img className="size-full object-cover" src={img} alt="chore" />
 				</div>
 			)}
 			<div className="w-full min-w-[200px] flex flex-col">
-				<CardHeader>
-					<CardTitle className="flex justify-between items-center gap-4 md:gap-6">
-						<Avatar className="size-10 md:size-14 -z-0">
-							<div className="bg-secondary size-full grid place-content-center text-background font-bold text-2xl overflow-hidden">
-								<p className="text-lg md:text-xl">{username ? username[0].toUpperCase() : "-"}</p>
-							</div>
-						</Avatar>
-						<p className="flex-1 truncate text-base md:text-xl max-[300px]:hidden">{username}</p>
+				<div className="flex flex-col space-y-1.5 p-6">
+					<div className="text-2xl font-semibold leading-none tracking-tight flex justify-between items-center gap-4 md:gap-6">
+						{username ? (
+							<>
+								<Avatar className="size-10 md:size-14 -z-0">
+									<div className="bg-secondary size-full grid place-content-center text-background font-bold text-2xl overflow-hidden">
+										<p className="text-lg md:text-xl">{username ? username[0].toUpperCase() : "-"}</p>
+									</div>
+								</Avatar>
+								<p className="flex-1 truncate text-base md:text-xl max-[300px]:hidden">{username}</p>
+							</>
+						) : (
+							<h1 className="font-bold text-xl md:text-2xl truncate">{title}</h1>
+						)}
 						<Badge className="text-sm md:text-base border-2" variant="outline">
 							{type}
 						</Badge>
-					</CardTitle>
-				</CardHeader>
-				<CardContent>
-					<h1 className="font-bold text-xl md:text-2xl mb-2 truncate">{title}</h1>
-					<p className={`${styles.description} text-base md:text-lg`}>{description}</p>
-				</CardContent>
-				<CardFooter className="flex-1 flex items-end">
+					</div>
+				</div>
+				<div className="p-6 pt-0">
+					{username && <h1 className="font-bold text-xl md:text-2xl mb-2 truncate">{title}</h1>}
+					<p className={`${username ? styles.descriptionSmall : styles.descriptionLarge} text-base md:text-lg`}>{description}</p>
+				</div>
+				<div className="flex items-end p-6 pt-0 flex-1">
 					<div className="flex w-full justify-between items-center gap-4">
 						<Button variant="secondary" size="lg" className="px-4 font-semibold text-base sm:text-lg shadow-md flex flex-row gap-2">
 							See More
@@ -70,8 +73,8 @@ export default function ServiceCard({className, img, username, type, title, desc
 							)}
 						</span>
 					</div>
-				</CardFooter>
+				</div>
 			</div>
-		</Card>
+		</div>
 	);
 }

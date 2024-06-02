@@ -11,7 +11,7 @@ import Link from "next/link";
 import {useRouter} from "next/navigation";
 import {FormEvent, useState} from "react";
 
-export default function Register() {
+export default function Create() {
 	const [title, setTitle] = useState("");
 	const [description, setDescription] = useState("");
 	const [price, setPrice] = useState(0);

@@ -128,6 +128,11 @@ export default function Header({redirect = true}: HeaderProps) {
 												<div ref={userMenuRef}>
 													<ul className="flex flex-col gap-2 font-medium text-lg">
 														<li>
+															<Link className="w-full block text-start rounded-md hover:bg-slate-100 transition-all px-4 py-2 cursor-pointer" href={`/profile/${userData["id"]}`}>
+																User Profile
+															</Link>
+														</li>
+														<li>
 															<Link className="w-full block text-start rounded-md hover:bg-slate-100 transition-all px-4 py-2 cursor-pointer" href="/settings">
 																Settings
 															</Link>
@@ -214,6 +219,11 @@ export default function Header({redirect = true}: HeaderProps) {
 											<li>
 												<Link className="hover:underline underline-offset-8 decoration-2" href="/achievements">
 													Achievements
+												</Link>
+											</li>
+											<li>
+												<Link className="hover:underline underline-offset-8 decoration-2" href={`/profile/${userData["id"]}`}>
+													User Profile
 												</Link>
 											</li>
 											<li>
