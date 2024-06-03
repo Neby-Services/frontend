@@ -1,54 +1,54 @@
+// ServiceCard.tsx
+
 "use client";
 
 import {Avatar} from "@/components/ui/avatar";
 import {Badge} from "@/components/ui/badge";
 import {Button} from "@/components/ui/button";
+import {Card, CardContent, CardFooter, CardHeader, CardTitle} from "@/components/ui/card";
+import {cn} from "@/lib/utils";
 import styles from "@/ui/service-card.module.css";
 import Link from "next/link";
 
 interface ServiceCardProps {
+	className?: string;
 	id: string;
 	title: string;
 	description: string;
-	username?: string;
+	username: string;
 	type: string;
 	price: number;
 	img?: string;
+	status: string; // Nuevo campo para el estado
 }
 
-export default function ServiceCard({id, title, description, username, type, price, img}: ServiceCardProps) {
+export default function MyServiceCard({className, id, title, description, username, type, price, img, status}: ServiceCardProps) {
 	return (
-		<div className="bg-card text-card-foreground border-none shadow-md flex overflow-hidden h-min md:h-80 rounded-3xl">
+		<Card className={cn("border-none shadow-md flex overflow-hidden h-min md:h-80 rounded-3xl", className)}>
 			{img && (
 				<div className="w-80 hidden md:flex justify-center items-center overflow-hidden">
 					<img className="size-full object-cover" src={img} alt="chore" />
 				</div>
 			)}
 			<div className="w-full min-w-[200px] flex flex-col">
-				<div className="flex flex-col space-y-1.5 p-6">
-					<div className="text-2xl font-semibold leading-none tracking-tight flex justify-between items-center gap-4 md:gap-6">
-						{username ? (
-							<>
-								<Avatar className="size-10 md:size-14 -z-0">
-									<div className="bg-secondary size-full grid place-content-center text-background font-bold text-2xl overflow-hidden">
-										<p className="text-lg md:text-xl">{username ? username[0].toUpperCase() : "-"}</p>
-									</div>
-								</Avatar>
-								<p className="flex-1 truncate text-base md:text-xl max-[300px]:hidden">{username}</p>
-							</>
-						) : (
-							<h1 className="font-bold text-xl md:text-2xl truncate">{title}</h1>
-						)}
+				<CardHeader>
+					<CardTitle className="flex justify-between items-center gap-4 md:gap-6">
+						<Avatar className="size-10 md:size-14 -z-0">
+							<div className="bg-secondary size-full grid place-content-center text-background font-bold text-2xl overflow-hidden">
+								<p className="text-lg md:text-xl">{username ? username[0].toUpperCase() : "-"}</p>
+							</div>
+						</Avatar>
+						<p className="flex-1 truncate text-base md:text-xl max-[300px]:hidden">{username}</p>
 						<Badge className="text-sm md:text-base border-2" variant="outline">
 							{type}
 						</Badge>
-					</div>
-				</div>
-				<div className="p-6 pt-0">
-					{username && <h1 className="font-bold text-xl md:text-2xl mb-2 truncate">{title}</h1>}
-					<p className={`${username ? styles.descriptionSmall : styles.descriptionLarge} text-base md:text-lg`}>{description}</p>
-				</div>
-				<div className="flex items-end p-6 pt-0 flex-1">
+					</CardTitle>
+				</CardHeader>
+				<CardContent>
+					<h1 className="font-bold text-xl md:text-2xl mb-2 truncate">{title}</h1>
+					<p className={`${styles.description} text-base md:text-lg`}>{description}</p>
+				</CardContent>
+				<CardFooter className="flex-1 flex items-end">
 					<div className="flex w-full justify-between items-center gap-4">
 						<Link href={`/service/${id}`}>
 							<Button variant="secondary" size="lg" className="px-4 font-semibold text-base sm:text-lg shadow-md flex flex-row gap-2">
@@ -61,6 +61,11 @@ export default function ServiceCard({id, title, description, username, type, pri
 								</svg>
 							</Button>
 						</Link>
+						{status === "closed" && (
+							<Button variant="secondary" size="lg" className="px-4 font-semibold text-base sm:text-lg shadow-md flex flex-row gap-2">
+								Rate Service
+							</Button>
+						)}
 						<span className="flex justify-center items-center gap-2">
 							<p className="font-semibold text-sm md:text-lg truncate max-w-28">{price == 0 ? "Exchange" : price}</p>
 							{price == 0 ? (
@@ -77,8 +82,8 @@ export default function ServiceCard({id, title, description, username, type, pri
 							)}
 						</span>
 					</div>
-				</div>
+				</CardFooter>
 			</div>
-		</div>
+		</Card>
 	);
 }
