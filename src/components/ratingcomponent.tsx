@@ -107,9 +107,6 @@ export default function Userrating({redirect = true}: HeaderProps) {
 									<div className="relative"></div>
 								</div>
 							</div>
-							<div className="text-center mt-8">
-								<h3 className="text-4xl font-semibold leading-normal text-blueGray-700 mb-2">{userData?.username}</h3>
-							</div>
 							<div className="flex justify-center">
 								<RatingDetailedBasic title="User Ratings" reviews={ratings} />
 							</div>
